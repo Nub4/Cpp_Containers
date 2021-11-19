@@ -7,7 +7,8 @@
 
 namespace ft
 {
-    template<class Key, class T, class Compare = less<key>, class Alloc = std::allocator<pair<const Key, T> > >
+    template<class Key, class T, class Compare = less<key>,
+    class Alloc = std::allocator<pair<const Key, T> > >
     class map
     {
         public:
@@ -43,7 +44,8 @@ namespace ft
                 assign(first, last);
             }
 
-            map(const map &x) : _size(x._size), _capacity(x._capacity), _comp(x._comp), _alloc(x._alloc){
+            map(const map &x) : _size(x._size), _capacity(x._capacity),
+            _comp(x._comp), _alloc(x._alloc){
                 _arr = _alloc.allocate(_capacity);
                 for (size_type i = 0; i < _size; i++)
                     _arr[i] = x._arr[i];

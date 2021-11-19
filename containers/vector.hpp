@@ -15,14 +15,14 @@ namespace ft
     class vector
     {
         public:
-            typedef T                                           value_type; 
-            typedef Alloc                                       allocator_type;
-            typedef value_type&                                 reference;
-            typedef const value_type&                           const_reference;
-            typedef value_type*                                 pointer;
-            typedef const value_type*                           const_pointer;
-            typedef ptrdiff_t                                   difference_type;
-            typedef size_t                                      size_type;
+            typedef T                                               value_type; 
+            typedef Alloc                                           allocator_type;
+            typedef value_type&                                     reference;
+            typedef const value_type&                               const_reference;
+            typedef value_type*                                     pointer;
+            typedef const value_type*                               const_pointer;
+            typedef ptrdiff_t                                       difference_type;
+            typedef size_t                                          size_type;
             typedef ft::random_access_iterator<value_type>          iterator;
             typedef ft::random_access_iterator<const value_type>    const_iterator;
             typedef ft::reverse_iterator<const_iterator>            const_reverse_iterator;
@@ -34,7 +34,8 @@ namespace ft
             explicit vector(const allocator_type& alloc = allocator_type())
             : _size(0), _capacity(0), _arr(0), _alloc(alloc) {}
 
-            explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+            explicit vector (size_type n, const value_type& val = value_type(),
+            const allocator_type& alloc = allocator_type())
             : _size(n), _capacity(n), _alloc(alloc) {
                 _arr = _alloc.allocate(n);
                 for (size_type i = 0; i < n; i++)  
@@ -49,7 +50,8 @@ namespace ft
             }
 
             template<class InputIterator>
-            vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) : _alloc(alloc){
+            vector(InputIterator first, InputIterator last,
+            const allocator_type &alloc = allocator_type()) : _alloc(alloc){
                 _capacity = _distance(first, last);
                 _size = _capacity;
                 _arr = _alloc.allocate(_capacity);
