@@ -15,11 +15,12 @@ int	main()
 	v.push_back(5);
 	v.push_back(6);
 
+	for (std::vector<int>::reverse_iterator lool = v.rbegin(); lool != v.rend(); lool++)
+		std::cout << *lool << std::endl;
+
 	std::stack<int, std::vector<int> > s(v);
 
 	std::cout << "stack = " << s.top() << std::endl;
-
-	//v.insert(v.begin() + 4, v.begin() + 2, v.end() - 2);
 
 	v.erase(v.begin() + 3, v.end());
 
@@ -37,6 +38,9 @@ int	main()
 	vec.push_back(4);
 	vec.push_back(5);
 	vec.push_back(6);
+
+	for (ft::vector<int>::reverse_iterator lol = vec.rbegin(); lol != vec.rend(); lol++)
+		std::cout << *lol << std::endl;
 
 	vec2.push_back(1);
 	vec2.push_back(2);
@@ -56,12 +60,9 @@ int	main()
 	std::cout << "stack = " << sta.top() << std::endl;
 	std::cout << "size = " << sta.size() << std::endl;
 
-//	vec.insert(vec.begin() + 4, vec.begin() + 2, vec.end() - 2);
-
 	vec.erase(vec.begin() + 3, vec.end());
 
 	for (size_t i = 0; i < vec.size(); i++)
 		std::cout << vec[i] << std::endl;
-
 	return 0;
 }

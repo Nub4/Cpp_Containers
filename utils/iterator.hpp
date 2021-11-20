@@ -10,60 +10,122 @@
 
 namespace ft
 {
+    template <class Category, class T, class Distance = ptrdiff_t,
+    class Pointer = T*, class Reference = T&>
+    class iterator
+    {
+        typedef Distance  difference_type;
+        typedef T         value_type;
+		typedef Pointer   pointer;
+		typedef Reference reference;
+		typedef Category  iterator_category;
+    };
+
+    struct random_access_iterator_tag {};
+
+    template <class Iterator>
+    class iterator_traits
+    {
+        typedef typename Iterator::difference_type      difference_type;
+        typedef typename Iterator::value_type           value_type;
+        typedef typename Iterator::pointer              pointer;
+        typedef typename Iterator::reference            reference;
+        typedef typename Iterator::iterator_category    iterator_category;
+    };
+    
+    template <class T>
+    class iterator_traits<T*>
+    {
+        typedef ptrdiff_t                           difference_type;
+        typedef T                                   value_type;
+        typedef T*                                  pointer;
+        typedef T&                                  reference;
+        typedef ft::random_access_iterator_tag      iterator_category;
+    };
+    
+    template <class T>
+    class iterator_traits<const T*>
+    {
+        typedef ptrdiff_t                           difference_type;
+        typedef T                                   value_type;
+        typedef T*                                  pointer;
+        typedef T&                                  reference;
+        typedef ft::random_access_iterator_tag      iterator_category;
+    };
+
     template<typename T>
-    class random_access_iterator
+    class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
     {
         public:
-                random_access_iterator(T *initLoc){
-                    _current = initLoc;
-                }
+            /* Is default-constructible, copy-constructible, copy-assignable and destructible:*/
+            random_access_iterator() : _current() {}
+            random_access_iterator(T *initLoc) :_current(initLoc) {}
+            random_access_iterator(const random_access_iterator &src)
+            : _current(src._current) {}
+            
+            virtual ~random_access_iterator() {}
 
-                bool    operator!=(const random_access_iterator &rhs){
-                    return _current != rhs._current;
-                }
+            random_access_iterator  &operator=(const random_access_iterator &rhs){
+                _current = rhs._current;
+                return *this;
+            }
 
-                bool    operator==(const random_access_iterator &rhs){
-                    return _current == rhs._current;
-                }
+            /* Can be compared for equivalence using the equality/inequality operators
+            (meaningful when both iterator values iterate over the same underlying sequence): */
+            bool    operator!=(const random_access_iterator &rhs) { return _current != rhs._current; }
+            bool    operator==(const random_access_iterator &rhs) { return _current == rhs._current; }
 
-                random_access_iterator    operator+(int x){
-                    while (x > 0){
-                        _current++;
-                        x--;
-                    }
-                    return *this;
-                }
+            /* Can be dereferenced as an rvalue (if in a dereferenceable state): */
+            T       &operator*() { return *_current; }
+            T       *operator->() { return &(operator*()); }
 
-                random_access_iterator    operator-(int x){
-                    while (x > 0){
-                        _current--;
-                        x--;
-                    }
-                    return *this;
-                }
-
-                random_access_iterator  &operator--(){
-                    _current--;
-                    return *this;
-                }
-                random_access_iterator  operator--(int){
-                    random_access_iterator oldCopy = *this;
-                    _current--;
-                    return oldCopy;
-                }
-
-                random_access_iterator   &operator++(){
+            /* Supports the arithmetic operators + and - between an iterator and an integer value,
+            or subtracting an iterator from another: */
+            random_access_iterator  operator+(int x){
+                while (x-- > 0)
                     _current++;
-                    return *this;
-                }
-                random_access_iterator   operator++(int){
-                    random_access_iterator oldCopy = *this;
+                return *this;
+            }
+            random_access_iterator  operator-(int x){
+                while (x-- > 0)
+                    _current--;
+                return *this;
+            }
+
+            /* Supports compound assignment operations += and -=: */
+            random_access_iterator  operator+=(int x){
+                while (x-- > 0)
                     _current++;
-                    return oldCopy;
-                }
-                T   &operator*(){
-                    return *_current;
-                }
+                return *this;
+            }
+            random_access_iterator  operator-=(int x){
+                while (x-- > 0)
+                    _current--;
+                return *this;
+            }
+
+            /* Supports the offset dereference operator ([]): */
+            T   &operator[](int n) { return (*(operator+(n))); }
+
+            /* Can increment and deincrement: */
+            random_access_iterator  &operator--(){
+                _current--;
+                return *this;
+            }
+            random_access_iterator  operator--(int){
+                random_access_iterator oldCopy = *this;
+                _current--;
+                return oldCopy;
+            }
+            random_access_iterator  &operator++(){
+                _current++;
+                return *this;
+            }
+            random_access_iterator  operator++(int){
+                random_access_iterator oldCopy = *this;
+                _current++;
+                return oldCopy;
+            }
 
             private:
                 T   *_current;
@@ -73,71 +135,79 @@ namespace ft
     class reverse_iterator
     {
         public:
-            reverse_iterator(T *initLoc){
-                _current = initLoc;
-            }
+        /* Is default-constructible, copy-constructible, copy-assignable and destructible:*/
+            reverse_iterator() : _current() {}
+            reverse_iterator(T *initLoc) :_current(initLoc) {}
+            reverse_iterator(const reverse_iterator &src)
+            : _current(src._current) {}
+                
+            virtual ~reverse_iterator() {}
 
-            bool    operator!=(const reverse_iterator &rhs){
-                return _current != rhs._current;
-            }
-
-            reverse_iterator    operator+(int x){
-                while (x > 0){
-                    _current++;
-                    x--;
-                }
+            reverse_iterator  &operator=(const reverse_iterator &rhs){
+                _current = rhs._current;
                 return *this;
             }
 
-            reverse_iterator    operator-(int x){
-                while (x > 0){
+            /* Can be compared for equivalence using the equality/inequality operators
+            (meaningful when both iterator values iterate over the same underlying sequence): */
+            bool    operator!=(const reverse_iterator &rhs) { return _current != rhs._current; }
+            bool    operator==(const reverse_iterator &rhs) { return _current == rhs._current; }
+
+            /* Can be dereferenced as an rvalue (if in a dereferenceable state): */
+            T       &operator*() { return *_current; }
+            T       *operator->() { return &(operator*()); }
+
+            /* Supports the arithmetic operators + and - between an iterator and an integer value,
+            or subtracting an iterator from another: */
+            reverse_iterator  operator+(int x){
+                while (x-- > 0)
                     _current--;
-                    x--;
-                }
+                return *this;
+            }
+            reverse_iterator  operator-(int x){
+                while (x-- > 0)
+                    _current++;
                 return *this;
             }
 
-            reverse_iterator   &operator++(){
+            /* Supports compound assignment operations += and -=: */
+            reverse_iterator  operator+=(int x){
+                while (x-- > 0)
+                    _current--;
+                return *this;
+            }
+            reverse_iterator  operator-=(int x){
+                while (x-- > 0)
+                    _current++;
+                return *this;
+            }
+
+            /* Supports the offset dereference operator ([]): */
+            T   &operator[](int n) { return (*(operator-(n))); }
+
+            /* Can increment and deincrement: */
+            reverse_iterator  &operator--(){
                 _current++;
                 return *this;
             }
-            reverse_iterator   operator++(int){
+            reverse_iterator  operator--(int){
                 reverse_iterator oldCopy = *this;
                 _current++;
                 return oldCopy;
             }
-            T   &operator*(){
-                return *_current;
+            reverse_iterator  &operator++(){
+                _current--;
+                return *this;
+            }
+            reverse_iterator  operator++(int){
+                reverse_iterator oldCopy = *this;
+                _current--;
+                return oldCopy;
             }
 
-        private:
-            T   *_current;
+            private:
+                T   *_current;
     };
-
-    template <class InputIterator1, class InputIterator2>
-    bool equal ( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
-    {
-        while (first1!=last1) {
-            if (!(*first1 == *first2)) 
-                return false;
-            ++first1; ++first2;
-        }
-        return true;
-    }
-
-    template <class InputIterator1, class InputIterator2>
-    bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
-    InputIterator2 first2, InputIterator2 last2)
-    {
-        while (first1!=last1){
-            if (first2==last2 || *first2<*first1)
-                return false;
-            else if (*first1<*first2)
-                return true;
-            ++first1; ++first2;
-        }
-        return (first2!=last2);
-    }
 }
 
 #endif
