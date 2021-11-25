@@ -2,7 +2,9 @@ NAME := ft_containers
 
 SRCS_DIR := testers
 
-SRCS := tester.cpp
+SRCS := main.cpp \
+		vector_tests.cpp \
+		utils.cpp
 
 OBJ_DIR := objs
 

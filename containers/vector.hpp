@@ -16,6 +16,8 @@ namespace ft
     class vector
     {
         public:
+
+        
             typedef T                                               value_type; 
             typedef Alloc                                           allocator_type;
             typedef value_type&                                     reference;
@@ -60,10 +62,8 @@ namespace ft
             }
 
             ~vector() {
-                // clear();
-                // _alloc.deallocate(FIRST ELEMENT, _capacity);
-                if (_size != 0)
-                    _alloc.deallocate(_arr, _capacity);
+                clear();
+                _alloc.deallocate(_arr, _capacity);
             }
 
             vector  &operator=(const vector &x){
@@ -92,6 +92,7 @@ namespace ft
 
             void        push_back(const value_type &val){
                 if (_size == 0){
+                    _alloc.deallocate(_arr, _capacity);
                     _capacity = 1;
                     _arr = _alloc.allocate(_capacity);
                 }
@@ -102,70 +103,70 @@ namespace ft
             }
 
             void        pop_back() {
-                // _alloc.destroy(LAST ELEMENT);    
+                 _alloc.destroy(_arr + _size);    
                 _size--;
             }
         
             void        swap(vector &x) {
-                vector temp = x;
-                x = *this;
-                *this = temp;
+                size_type       temp_size = x._size;
+                size_type       temp_capacity = x._capacity;
+                pointer         temp_arr = x._arr;
+                allocator_type  temp_alloc = x._alloc;
+
+                x._size = _size;
+                x._capacity = _capacity;
+                x._arr = _arr;
+                x._alloc = _alloc;
+
+                _size = temp_size;
+                _capacity = temp_capacity;
+                _arr = temp_arr;
+                _alloc = temp_alloc;
             }
 
             void        clear() {
                 while (_size){
-                    // _alloc.destroy(LAST ELEMENT)
+                     _alloc.destroy(_arr + _size);
                     _size--;
                 }
             }
 
             iterator    insert(iterator position, const value_type &val){
-                vector v(begin(), end());
-                vector v2(begin(), end());
-                iterator out = begin();
-                if (_size == _capacity)
-                    reserve(_capacity * 2);
-                _size++;
-                size_type i = 0;
-                size_type j = -1;
-                while (++j < _size){
-                    if (v[i] == *position){
-                        v[i] = val;
-                        i++;
-                    }
-                    v[i] = v2[j];
-                    i++;
-                }
-                for (size_type y = 0; y < _size; y++){
-                    *out = v[y];
-                    out++;
-                }
-                return out;
+                insert(position, (size_type)1, val);
+                return _arr;
             }
 
-            void        insert(iterator position, size_type n, const value_type &val){
-                vector v(begin(), end());
-                vector v2(begin(), end());
-                iterator out = begin();
-                if (n + _size > _capacity)
-                    reserve(n + _size);
-                _size = _size + n;
+          void        insert(iterator position, size_type n, const value_type &val){
+                if (position == end()){
+                    while (n-- > 0)
+                        push_back(val);
+                    return ;
+                }
+                T temp[_size + n];
+                for (size_type i = 0; i < _size; i++)
+                    temp[i] = _arr[i];
                 size_type i = 0;
-                size_type j = -1;
-                while (++j < _size){
-                    if (v[i] == *position){
-                        while (n > 0){
-                            v[i] = val;
-                            i++;
-                            n--;
-                        }
-                    }
-                    v[i] = v2[j];
+                size_type k = 0;
+                size_type size = _size;
+                for (iterator pos = begin(); pos != position; pos++){
+                    _arr[i] = temp[i];
+                    i++;
+                    k++;
+                }
+                while (n-- > 0){
+                    if (i >= _size)
+                        push_back(val);
+                    else
+                        _arr[i] = val;
                     i++;
                 }
-                for (size_type y = 0; y < _size; y++){
-                    *out = v[y];
-                    out++;
+                while (k < size){ 
+                    if (i >= _size)
+                        push_back(temp[k]);
+                    else
+                        _arr[i] = temp[k];
+                    i++;
+                    k++;
                 }
             }
 
@@ -314,7 +315,7 @@ namespace ft
 
         private:
             size_type       _size;
-            size_type       _capacity;
+            size_type       _capacity; 
             pointer         _arr;
             allocator_type  _alloc;
 
