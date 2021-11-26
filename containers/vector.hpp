@@ -125,10 +125,8 @@ namespace ft
             }
 
             void        clear() {
-                while (_size){
-                     _alloc.destroy(_arr + _size);
-                    _size--;
-                }
+                while (_size)
+                    pop_back();
             }
 
             iterator    insert(iterator position, const value_type &val){
@@ -226,7 +224,7 @@ namespace ft
                         out++;
                     }
                 }
-                _size--;
+                pop_back();
                 return (out);
             }
 
@@ -248,7 +246,7 @@ namespace ft
                     out++;
                 }
                 while (j-- > 0)
-                    _size--;
+                    pop_back();
                 return out;
             }
 
@@ -260,7 +258,7 @@ namespace ft
 
             void            resize(size_type n, value_type val = value_type()) {
                 while (n < _size)
-		    		_size--;
+                    pop_back();
 			    if (n > _capacity)
 				    reserve(n);
     			while (n > _size)
@@ -271,7 +269,9 @@ namespace ft
                 if (n > max_size())
                     throw std::length_error("vector::reserve");
                 else if (n > _capacity){
-                    pointer temp = _arr;
+                    T temp[_size];
+                    for (size_type i = 0; i < _size; i++)
+                        temp[i] = _arr[i];
                     _alloc.deallocate(_arr, _capacity);
                     _capacity = n;
                     _arr = _alloc.allocate(_capacity);
@@ -346,7 +346,6 @@ namespace ft
         return (!(lhs == rhs));
     }
 
-    /* TEE JOTAIN LEXICOGRAPHICALILLE!! */
     template <class T, class Alloc>
     bool    operator<(const vector<T,Alloc> &lhs, const vector<T,Alloc> &rhs){
         return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
