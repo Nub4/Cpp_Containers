@@ -15,9 +15,7 @@ namespace ft
     template<class T, class Alloc = std::allocator<T> >
     class vector
     {
-        public:
-
-        
+        public:        
             typedef T                                               value_type; 
             typedef Alloc                                           allocator_type;
             typedef value_type&                                     reference;
@@ -35,35 +33,48 @@ namespace ft
         
             /* Member functions: */
             explicit vector(const allocator_type& alloc = allocator_type())
-            : _size(0), _capacity(0), _arr(0), _alloc(alloc) {}
+            {
+                _alloc = alloc;
+                _size = 0;
+                _capacity = 0;
+                _arr = NULL;
+            }
 
             explicit vector (size_type n, const value_type& val = value_type(),
             const allocator_type& alloc = allocator_type())
-            : _size(n), _capacity(n), _alloc(alloc) {
+            {
+                _alloc = alloc;
+                _size = n;
+                _capacity = n;
                 _arr = _alloc.allocate(n);
                 for (size_type i = 0; i < n; i++)  
-                    _arr[i] = val;
+                    _alloc.construct(_arr + i, val);
             }
 
             vector(const vector& x)
-            : _size(x._size), _capacity(x._size), _alloc(x._alloc) {
-                _arr = _alloc.allocate(_capacity);
-                for (size_type i = 0; i < _size; i++)
-                    _arr[i] = x._arr[i];
+            {
+                this->_alloc = _alloc;
+                this->_size = 0;
+                this->_capacity = 0;
+                this->_arr = NULL;
+                *this = x;
             }
 
             template<class InputIterator>
             vector(InputIterator first, InputIterator last,
-            const allocator_type &alloc = allocator_type()) : _alloc(alloc){
+            const allocator_type &alloc = allocator_type())
+            {
+                _alloc = alloc;
+                _size = _distance(first, last);
                 _capacity = _distance(first, last);
-                _size = _capacity;
                 _arr = _alloc.allocate(_capacity);
                 assign(first, last);
             }
 
             ~vector() {
                 clear();
-                _alloc.deallocate(_arr, _capacity);
+                if (_arr)
+                    _alloc.deallocate(_arr, _capacity);
             }
 
             vector  &operator=(const vector &x){
@@ -72,7 +83,7 @@ namespace ft
                 _alloc = x._alloc;
                 _arr = _alloc.allocate(_capacity);
                 for (size_type i = 0; i < _size; i++)
-                    _arr[i] = x._arr[i];
+                    _alloc.construct(_arr + i, x._arr[i]);
                 return *this;
             }
 
@@ -140,9 +151,9 @@ namespace ft
                         push_back(val);
                     return ;
                 }
-                T temp[_size + n];
+                pointer temp = _alloc.allocate(_size + n);
                 for (size_type i = 0; i < _size; i++)
-                    temp[i] = _arr[i];
+                    _alloc.construct(temp + i, _arr[i]);
                 size_type i = 0;
                 size_type k = 0;
                 size_type size = _size;
@@ -269,14 +280,12 @@ namespace ft
                 if (n > max_size())
                     throw std::length_error("vector::reserve");
                 else if (n > _capacity){
-                    T temp[_size];
+                    pointer temp = _alloc.allocate(n);
                     for (size_type i = 0; i < _size; i++)
-                        temp[i] = _arr[i];
+                        _alloc.construct(temp + i, _arr[i]);
                     _alloc.deallocate(_arr, _capacity);
+                    _arr = temp;
                     _capacity = n;
-                    _arr = _alloc.allocate(_capacity);
-                    for (size_type i = 0; i < _size; i++)
-                        _arr[i] = temp[i];
                 }
             }
 

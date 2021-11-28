@@ -19,5 +19,6 @@ void    ft_modifiers();
 void    ft_capacity();
 void    ft_element_access();
 bool    ft_compare_vector(std::vector<int> v1, ft::vector<int> v2);
+bool     ft_compare_vector_2(std::vector<std::string> v1, ft::vector<std::string> v2);
 
 #endif
