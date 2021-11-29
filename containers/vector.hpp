@@ -150,7 +150,7 @@ namespace ft
                         push_back(val);
                     return ;
                 }
-                pointer temp = _alloc.allocate(_size + n);
+                T   temp[_size + n];
                 for (size_type i = 0; i < _size; i++)
                     _alloc.construct(temp + i, _arr[i]);
                 size_type i = 0;
@@ -190,7 +190,7 @@ namespace ft
                 size_type i = 0;
                 size_type k = 0;
                 size_type size = _size;
-                pointer temp = _alloc.allocate(_size);
+                T   temp[_size];
                 for (size_type i = 0; i < _size; i++)
                     _alloc.construct(temp + i, _arr[i]);
                 for (iterator pos = begin(); pos != position; pos++){
