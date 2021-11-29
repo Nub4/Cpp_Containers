@@ -73,8 +73,7 @@ namespace ft
 
             ~vector() {
                 clear();
-                if (_arr)
-                    _alloc.deallocate(_arr, _capacity);
+                _alloc.deallocate(_arr, _capacity);
             }
 
             vector  &operator=(const vector &x){
@@ -109,7 +108,7 @@ namespace ft
                 }
                 else if (_size == _capacity)
                     reserve(_capacity * 2);
-                _arr[_size] = val;
+                _alloc.construct(_arr + _size, val);
                 _size++;
             }
 
@@ -181,49 +180,39 @@ namespace ft
 
             template<class InputIterator>
             void        insert(iterator position, InputIterator first, InputIterator last){
-                vector v(begin(), end());
-                vector v2(begin(), end());
-                iterator temp = begin();
-                size_type n = _distance(first, last);
-                size_type e = _distance(begin(), position);
-                size_type i = 0;
-                size_type j = -1;
-                if (e > _size){
-                    if (e + n > _capacity)
-                        reserve(e + n);
-                    _size = n + e;
-                    while (temp != position){
-                        v[i] = *temp;
-                        i++;
-                        temp++;
-                    }
+                if (position == end()){
                     while (first != last){
-                        v[i] = *first;
+                        push_back(*first);
                         first++;
-                        i++;
                     }
+                    return ;
                 }
-                else{
-                    if (n + _size > _capacity)
-                        reserve(n + _size);
-                    _size = _size + n;
-                    while (++j < _size){
-                        if (v[i] == *position){
-                            while (n > 0){
-                                v[i] = *first;
-                                first++;
-                                i++;
-                                n--;
-                            }
-                        }
-                        v[i] = v2[j];
-                        i++;
-                    }
+                size_type i = 0;
+                size_type k = 0;
+                size_type size = _size;
+                pointer temp = _alloc.allocate(_size);
+                for (size_type i = 0; i < _size; i++)
+                    _alloc.construct(temp + i, _arr[i]);
+                for (iterator pos = begin(); pos != position; pos++){
+                    _arr[i] = temp[i];
+                    i++;
+                    k++;
                 }
-                iterator out = begin();
-                for (size_type y = 0; y < _size; y++){
-                    *out = v[y];
-                    out++;
+                while (first != last){
+                    if (i >= _size)
+                        push_back(*first);
+                    else
+                        _arr[i] = *first;
+                    i++;
+                    first++;
+                }
+                while (k < size){
+                    if (i >= _size)
+                        push_back(temp[k]);
+                    else
+                        _arr[i] = temp[k];
+                    i++;
+                    k++;
                 }
             }
 

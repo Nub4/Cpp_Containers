@@ -590,9 +590,6 @@ void    ft_modifiers_2()
             vv2[i] = "charlotte";
         }
     }
-    for (size_t i = 0; i < v2.size(); i++){
-        std::cout << v2[i] << " " << vv2[i] << std::endl;
-    }
     v4.insert(v4.begin() + 2, "VUF");
     v3.insert(v3.begin() +3, (size_t)10, "BOOM");
     v2.insert(v2.begin() + 2, v2.begin() + 3, v2.end() - 2);
@@ -657,6 +654,60 @@ void    ft_modifiers_2()
 
 }
 
+void    ft_member_functions_2()
+{
+        // STL:
+		std::vector<std::string> v1(7);
+		std::vector<std::string> v2(4, "james");
+        std::vector<std::string> v3(v2); 
+		std::vector<std::string> v4 = v1;
+        std::vector<std::string> v5; 
+        for (size_t i = 0; i < v1.size(); i++)
+			v1[i] = i;
+        std::vector<std::string> v6(v1.begin(), v1.end()); 
+
+        // MY:
+		ft::vector<std::string> vv1(7); 
+		ft::vector<std::string> vv2((size_t)4, "james");
+        ft::vector<std::string> vv3(vv2);
+		ft::vector<std::string> vv4 = vv1;
+        ft::vector<std::string> vv5; 
+        for (size_t i = 0; i < vv1.size(); i++)
+			vv1[i] = i;
+        ft::vector<std::string> vv6(vv1.begin(), vv1.end()); 
+
+        // COMPARE:
+        if (ft_compare_vector_2(v1, vv1))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+
+        if (ft_compare_vector_2(v2, vv2))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+
+        if (ft_compare_vector_2(v3, vv3))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+
+        if (ft_compare_vector_2(v4, vv4))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+
+        if (ft_compare_vector_2(v5, vv5))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+            
+        if (ft_compare_vector_2(v6, vv6))
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+}
+
 void    ft_vector_testing()
 {
     // INTS:
@@ -676,6 +727,9 @@ void    ft_vector_testing()
 
     // STRINGS:
     std::cout << GREEN << "\n--- VECTOR TESTINGS (STRINGS) ----\n\n";
+    std::cout << YELLOW << "--- Member functions ---\n";
+    std::cout << "|    Size" << "|Capacity|" << "Range\n" << RESET << std::endl;
+    ft_member_functions_2();
     std::cout << YELLOW << "--- Modifiers ---\n";
     std::cout << "|    Size" << "|Capacity|" << "Range\n" << RESET << std::endl;
     ft_modifiers_2();
