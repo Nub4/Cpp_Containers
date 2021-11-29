@@ -9,8 +9,8 @@ int	main(int ac, char **av)
 	std::string s = av[1];
 	if (s == "vector")
 		ft_vector_testing();
-	// else if (s == "stack")
-	// 	ft_stack_testing();
+	else if (s == "stack")
+	 	ft_stack_testing();
 //	else if (s == "map")
 //		ft_map_testing();
 	else

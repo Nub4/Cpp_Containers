@@ -4,7 +4,8 @@ SRCS_DIR := testers
 
 SRCS := main.cpp \
 		vector_tests.cpp \
-		utils.cpp
+		utils.cpp \
+		stack_tests.cpp
 
 OBJ_DIR := objs
 
