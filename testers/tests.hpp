@@ -2,9 +2,11 @@
 # define TESTS_HPP
 
 #include <vector>
+#include <map>
 #include <stack>
 #include <string>
 #include <iomanip>
+#include "../containers/map.hpp"
 #include "../containers/stack.hpp"
 #include "../utils/iterator.hpp"
 
@@ -13,6 +15,7 @@
 #define RED		"\033[31m"
 #define RESET	"\033[0m"
 
+void    ft_map_testing();
 void    ft_stack_testing();
 void    ft_vector_testing();
 bool    ft_compare_vector(std::vector<int> v1, ft::vector<int> v2);

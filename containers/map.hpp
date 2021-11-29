@@ -1,13 +1,14 @@
-#include MAP_HPP
+#ifndef MAP_HPP
 # define MAP_HPP
 
 # include <iostream>
 # include <string>
+# include "../utils/utils.hpp"
 
 namespace ft
 {
-    template<class Key, class T, class Compare = less<key>,
-    class Alloc = std::allocator<pair<const Key, T> > >
+    template<class Key, class T, class Compare = ft::less<Key>,
+    class Alloc = std::allocator<ft::pair<const Key, T> > >
     class map
     {
         public:
@@ -15,16 +16,30 @@ namespace ft
             typedef T                                               mapped_type;
             typedef ft::pair<const key_type, mapped_type>           value_type;
             typedef Compare                                         key_compare;
-           // typedef value_comp                                    value_compare;
+            class value_compare : ft::binary_function<value_type, value_type, bool>
+            {
+                friend class map<Key, T, Compare, Alloc>;
+                protected:
+                    Compare comp;
+                    value_compare (Compare c) : comp(c) {}
+                public:
+                    typedef bool result_type;
+                    typedef value_type first_argument_type;
+                    typedef value_type second_argument_type;
+                    bool operator() (const value_type& x, const value_type& y) const
+                    {
+                        return comp(x.first, y.first);
+                    }
+            };
             typedef Alloc                                           allocator_type;
             typedef value_type&                                     reference;
             typedef const value_type&                               const_reference;
             typedef value_type*                                     pointer;
             typedef const value_type*                               const_pointer;
-            typedef ft::bidirectional_iterator<value_type>          iterator;
-            typedef ft::bidirectional_iterator<const value_type>    const_iterator;
-            typedef reverse_iterator<iterator>                      reverse_iterator;
-            typedef reverse_iterator<const_iterator>                const_reverse_iterator;
+            typedef std::__is_bidirectional_iterator<value_type>          iterator;
+            typedef std::__is_bidirectional_iterator<const value_type>    const_iterator;
+            typedef std::reverse_iterator<iterator>                      reverse_iterator;
+            typedef std::reverse_iterator<const_iterator>                const_reverse_iterator;
             typedef ptrdiff_t                                       difference_type;
             typedef size_t                                          size_type;
 
@@ -32,186 +47,101 @@ namespace ft
         /* Containers: */
             explicit map(const key_compare &comp = key_compare(),
             const allocator_type &alloc = allocator_type())
-            : _size(0), _capacity(0), _arr(0), _comp(comp), _alloc(alloc) {}
-
-            template<class  InputIterator>
-            map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(),
-            const allocator_type &alloc = allocator_type()) : _comp(comp), _alloc(alloc){
-                _capacity = _distance(first, last);
-                _size = _capacity;
-                _arr = _alloc.allocate(_capacity);
-                assign(first, last);
+            {
+                _size = 0;
+                _alloc = alloc;
+                _comp = comp;
+                _root = NULL;
             }
-
-            map(const map &x) : _size(x._size), _capacity(x._capacity),
-            _comp(x._comp), _alloc(x._alloc){
-                _arr = _alloc.allocate(_capacity);
-                for (size_type i = 0; i < _size; i++)
-                    _arr[i] = x._arr[i];
-            }
-
-            ~map(){
-                if (_size != 0)
-                    _alloc.deallocate(_arr, _capacity);
-            }
-
-            map &operator=(const map &x){
-                _size = x._size;
-                _capacity = x._capacity;
-                _alloc = x._alloc;
-                _arr = _alloc.allocate(_capacity);
-                for (size_type i = 0; i < _size; i++)
-                    _arr[i] = x._arr[i];
-                return *this;
-            }
-        
-        /* Iterators: */
-         /*   iterator                begin(){
-
-            }
-
-            const_iterator          begin() const{
-
-            }
-
-            iterator                end(){
-
-            }
-
-            const_iterator          end() const{
-
-            }
-
-            reverse_iterator        rbegin(){
-
-            }
-
-            const_reverse_iterator  rbegin() const{
-
-            }
-
-            reverse_iterator        rend(){
-
-            }
-
-            const_reverse_iterator  rend() const{
-
-            }*/
 
         /* Capacity: */
-         /*   bool        empty() const{
+            bool empty() const { _size = 0 ? true : false; }
 
-            }
+            size_type size() const { return _size; }
 
-            size_type   size() const{
-
-            }
-
-            size_type   max_size() const{
-
-            }*/
-
-        /* Element access: */
-        /*    mapped_type &operator[](const key_type &k){
-
-            }*/
-
-        /* Modifiers */
-       /*     pair<iterator, bool>    insert(const value_type &val){
-
-            }
-
-            iterator                insert(iterator position, const value_type &val){
-
-            }
-
-            template<class InputIterator>
-            void                    insert(InputIterator first, InputIterator last){
-
-            }
-
-            void                    erase(iterator position){
-
-            }
-
-            size_type               erase(const key_type &k){
-
-            }
-
-            void                    erase(iterator first, iterator last){
-
-            }
-
-            void                    swap(map &x){
-
-            }
-
-            void                    clear(){
-
-            }*/
-
-        /* Observers: */
-         /*   key_compare     key_comp() const{
-
-            }
-
-            value_compare   value_comp() const{
-
-            }*/
-
-        /* Operations: */
-  /*          iterator find(const key_type &k){
-
-            }
-
-            const_iterator find(const key_type &k) const{
-
-            }
-
-            size_type   count(const key_type &k) const{
-
-            }
-
-            iterator    lower_bound(const key_type &k){
-
-            }
-
-            const_iterator  lower_bound(const key_type &k) const{
-
-            }
-
-            iterator upper_bound(const key_type &k){
-
-            }
-
-            const_iterator  upper_bound(const key_type &k) const{
-
-            }
-
-            pair<const_iterator, const_iterator>    equal_range(const key_type &k) const{
-
-            }
-
-            pair<iterator, iterator>                equal_range(const key_type &k){
-
-            }*/
+            size_type max_size() const { return _alloc.max_size(); }
 
         private:
-            size_type       _size;
-            size_type       _capacity;
-            pointer         _arr;
-            allocator_type  _alloc;
-            key_compare     _comp;
 
-            template<class InputIterator>
-            size_type  _distance(InputIterator first, InputIterator last){
-                size_type i = 0;
-                while (first != last){
-                    i++;
-                    first++;
-                }
-                return i;
-            }
+            struct _Node
+            {
+                value_type       val;
+                struct _Node     *left;
+                struct _Node     *right;
+            };
+
+            size_type           _size;
+            key_compare         _comp;
+            _Node                *_root;
+            allocator_type      _alloc;
+
+            /* creates new node with a value */
+            // _Node   *_createNode(value_type val)
+            // {
+            //     _Node *newNode = _alloc.allocate(1);
+                // if (newNode)
+                // {
+                //     newNode->val = val;
+                //     newNode->left = NULL;
+                //     newNode->right = NULL;
+                // }
+            //     return newNode;
+            // }
+
+            /* apply elements from top to the left and right */
+            // void    _node_apply_prefix(_Node *root, void (*apply)(void *))
+            // {
+            //     (*apply)(root->val);
+            //     if (root->left)
+            //         _node_apply_prefix(root->left, apply);
+            //     if (root->right)
+            //         _node_apply_prefix(root->right, apply);
+            // }
+
+            /* apply elements from left to the right (smallest one to the highest) */
+            // void    _node_apply_infix(_Node *root, void (*applyf)(void *))
+            // {
+            //     if (root->left)
+            //         _node_apply_infix(root->left, applyf);
+            //     (*applyf)(root->val);
+            //     if (root->right)
+            //         _node_apply_infix(root->right, applyf);
+            // }
+
+            /* apply elements from the bottom first left side, then right side and root last */
+            // void    _node_apply_suffix(_Node *root, void (*applyf)(void *))
+            // {
+            //     if (root->left)
+            //         _node_apply_suffix(root->left, applyf);
+            //     if (root->right)
+            //         _node_apply_suffix(root->right, applyf);
+            //     (*applyf)(root->val);
+            // }
+
+            /* insert data, cmpf is compare function */
+            // void    _node_insert_value(_Node **root, void *value, int (*cmpf)(void *, void *))
+            // {
+            //     if (!(*root))
+            //         _createNode(value);
+            //     else if ((*cmpf)(value, (*root)->val) < 0)
+            //         _node_insert_value(&(*root)->left, value, cmpf);
+            //     else
+            //         _node_insert_value(&(*root)->right, value, cmpf);
+            // }
+
+            /* search value from the tree from the left to the right (smallest one to the highest) */
+            // void    *_node_search_value(_Node *root, void *value, int (*cmpf)(void *, void *))
+            // {
+            //     if (!(root))
+            //         return (0);
+            //     _node_search_value((root)->left, value, cmpf);
+            //     if ((*cmpf)(value, (*root)->val) == 0)
+            //         return (root);
+            //     _node_search_value((root)->right, value, cmpf);
+            //     return (0);
+            // }
+
+
     };
 }
 
