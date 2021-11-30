@@ -14,7 +14,7 @@ namespace ft
         public:
             typedef Key                                             key_type;
             typedef T                                               mapped_type;
-            typedef ft::pair<const key_type, mapped_type>           value_type;
+            typedef ft::pair<key_type, mapped_type>           value_type;
             typedef Compare                                         key_compare;
             class value_compare : ft::binary_function<value_type, value_type, bool>
             {
@@ -51,7 +51,8 @@ namespace ft
                 _size = 0;
                 _alloc = alloc;
                 _comp = comp;
-                _root = NULL;
+                 _root = _createNode(ft::make_pair(12, 'c'));
+                 std::cout << "|" << _root->val.first << "|" << std::endl;
             }
 
         /* Capacity: */
@@ -62,31 +63,24 @@ namespace ft
             size_type max_size() const { return _alloc.max_size(); }
 
         private:
-
-            struct _Node
-            {
-                value_type       val;
-                struct _Node     *left;
-                struct _Node     *right;
-            };
-
-            size_type           _size;
-            key_compare         _comp;
-            _Node                *_root;
-            allocator_type      _alloc;
+            size_type                           _size;
+            key_compare                         _comp;
+            Node<value_type>                    *_root;
+            std::allocator<Node<value_type> >   _node;
+            allocator_type                      _alloc;
 
             /* creates new node with a value */
-            // _Node   *_createNode(value_type val)
-            // {
-            //     _Node *newNode = _alloc.allocate(1);
-                // if (newNode)
-                // {
-                //     newNode->val = val;
-                //     newNode->left = NULL;
-                //     newNode->right = NULL;
-                // }
-            //     return newNode;
-            // }
+            Node<value_type>   *_createNode(value_type value)
+            {
+                Node<value_type> *newNode = _node.allocate(1);
+                if (newNode)
+                {
+                    newNode->val = value;
+                    newNode->left = NULL;
+                    newNode->right = NULL;
+                }
+                return newNode;
+            }
 
             /* apply elements from top to the left and right */
             // void    _node_apply_prefix(_Node *root, void (*apply)(void *))
