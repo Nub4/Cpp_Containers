@@ -32,33 +32,69 @@ namespace ft
     struct pair
     {
         public:
+            typedef T1      first_type;
+            typedef T2      second_type;
+
+        public:
             pair() : first(), second() {};
-       
-            pair(const T1 &a, T2 &b) : first(a), second(b) {};
 
-            pair(const T1& a, const T2& b) : first(a), second(b) {};
-            
-            pair(const pair<T1, T2>& copy) : first(copy.first), second(copy.second) {};
+            template<class U, class V>
+            pair(const pair<U, V> &pr) {
+                first = pr.first;
+                second = pr.second;
+            };
 
-            template <typename U, typename V>
-            pair(const pair<U, V>& copy) : first(copy.first), second(copy.second) {};
+            pair(const first_type &a, const second_type &b){
+                first = a;
+                second = b;
+            };
 
-            ~pair() {};
-        
-            pair& operator=(const pair& assign)
-            {
-                if (this != &assign)
-                {
-                    first = assign.first;
-                    second = assign.second;
-                }
-                return (*this);
+            pair    &operator=(const pair &pr){
+                first = pr.first;
+                second = pr.second;
+                return *this;
             }
-            
-            T1 first;
-            T2 second;
-            
+
+            friend bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+            friend bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+            friend bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+            friend bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+            friend bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+            friend bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
+    
+            first_type  first;
+            second_type second;
     };
+
+    template <class T1, class T2>
+    bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return lhs.first==rhs.first && lhs.second==rhs.second;
+    }
+
+    template <class T1, class T2>
+    bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return !(lhs==rhs);
+    }
+
+    template <class T1, class T2>
+    bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second);
+    }
+
+    template <class T1, class T2>
+    bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return !(rhs<lhs);
+    }
+
+    template <class T1, class T2>
+    bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return rhs<lhs;
+    }
+
+    template <class T1, class T2>
+    bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+        return !(lhs<rhs);
+    }
 
     template <class T1, class T2>
     ft::pair<T1, T2> make_pair(T1 x, T2 y)
@@ -79,6 +115,22 @@ namespace ft
     {   
         bool operator() (const T &x, const T &y) const { return x < y; }    
     };
+
+    template<bool, class T>
+	struct enable_if {};
+
+	template<class T>
+	struct enable_if<true, T>
+	{
+		typedef T type;
+	};
+
+	template<bool val, typename T>
+	struct is_integral_base
+	{
+		typedef T type;
+		static bool const value = val;
+	};
 }
 
 #endif
