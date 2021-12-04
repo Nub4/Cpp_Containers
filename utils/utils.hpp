@@ -111,21 +111,26 @@ namespace ft
 	struct Node
     {
 		T       val;
+        Node    *parent;
 	    Node    *left;
         Node    *right;
 
-		Node() : val(), left(NULL), right(NULL) {}
-		
-        Node(T value, Node *l = NULL, Node *r = NULL)
-        : val(value), left(l), right(r) {}
+		Node() : val(), parent(NULL), left(NULL), right(NULL) {}
+
+        Node(T value)
+        : val(value), parent(NULL), left(NULL), right(NULL) {}
+
+        Node(T value, Node *p)
+        : val(value), parent(p), left(NULL), right(NULL) {}
 
         Node(const Node &src)
-        : val(src.val), left(src.left), right(src.right) {}
+        : val(src.val), parent(src.parent), left(src.left), right(src.right) {}
 
         ~Node() {}
 
 	    Node &operator=(const Node &rhs){
 		    val = rhs.val;
+            parent = rhs.parent;
 		    left = rhs.left;
 		    right = rhs.right;
 		    return *this;
