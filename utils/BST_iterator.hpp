@@ -89,27 +89,23 @@ namespace ft
                 else
 			        _current = _current->parent;
 	        }
-	
+
             void _next()
             {
-                if (!_current->left && !_current->right)
+                if (_current->right)
+                {
+                    _current = _current->right;
+                    while (_current->left)
+                        _current = _current->left;
+                }
+                else if (_current->parent){
+                    if (_current->val.first > _current->parent->val.first)
+                        _current = NULL;
+                    else
+                        _current = _current->parent;
+                }
+                else if (!_current->parent && !_current->right)
                     _current = NULL;
-		        else if (_current->right)
-                {
-			        _current = _current->right;
-			        while (_current->left)
-				        _current = _current->left;
-		        }
-                else
-                {
-			        Node<T> *tmp = _current;
-			        _current = _current->parent;
-			        while (_current->left != tmp)
-			        {
-				        tmp = _current;
-				        _current = _current->parent;
-			        }
-		        }
 	        }
     };
 }

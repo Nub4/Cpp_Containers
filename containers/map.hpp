@@ -223,9 +223,7 @@ namespace ft
                 if (it != end())
                     return ft::make_pair(it, false);
                 Node<value_type> *temp = _rootNode;
-                if (!temp)
-                    _node_insert_value(&temp, val, NULL);
-                else if (temp->val.first > val.first)
+                if (temp->val.first > val.first)
                     _node_insert_value(&temp->left, val, temp);
                 else
                     _node_insert_value(&temp->right, val, temp);

@@ -18,14 +18,14 @@ void    ft_map_testing()
 
     ft::map<char,int> mymap2;
 
-    mymap2['a']=10;
-    mymap2['b']=20;
+    mymap2['b']=10;
+    mymap2['a']=20;
+    mymap2['c']=30;
 
     ft::map<char,int>::iterator it = mymap2.begin();
 
     for (; it != mymap2.end(); it++)
         std::cout << it->first << " " << it->second << std::endl;
- 
 
     // std::cout << mymap2['a'] << std::endl;
 
