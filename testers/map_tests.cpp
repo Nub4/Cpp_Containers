@@ -7,31 +7,51 @@ struct classcomp {
     {return lhs<rhs;}
 };
 
+
+
 void    ft_map_testing()
 {
-    std::cout << "--- STL MAP ---\n\n";
-    
-    std::cout << "--- Constructors: ---\n";
+    std::cout << YELLOW << "--- Constructors: ---\n" << RESET;
 
     {
         std::map<char,int> first;
-
         first['a']=10;
         first['b']=30;
         first['c']=50;
         first['d']=70;
-
         std::map<char,int> second (first.begin(),first.end());
-
         std::map<char,int> third (second);
-
-        std::map<char,int,classcomp> fourth;                 // class as Compare
-
+        std::map<char,int,classcomp> fourth;
         bool(*fn_pt)(char,char) = fncomp;
-        std::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+        std::map<char,int,bool(*)(char,char)> fifth (fn_pt);
+
+        ft::map<char,int> first2;
+        first2['a']=10;
+        first2['b']=30;
+        first2['c']=50;
+        first2['d']=70;
+        ft::map<char,int> second2 (first2.begin(),first2.end());
+        ft::map<char,int> third2 (second2);
+        ft::map<char,int,classcomp> fourth2;
+        bool(*fn_pt2)(char,char) = fncomp;
+        ft::map<char,int,bool(*)(char,char)> fifth2 (fn_pt2);
+
+        std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
+        if (ft_compare_map(first, first2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+        if (ft_compare_map(second, second2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+        if (ft_compare_map(third, third2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
     }
 
-    std::cout << "\n--- Insert: ---\n";
+    std::cout << YELLOW << "\n--- Insert: ---\n" << RESET;
 
     {
         // STL //
@@ -76,6 +96,7 @@ void    ft_map_testing()
         ft::map<char,int> anothermap2;
         anothermap2.insert(mymap2.begin(),mymap2.find('c'));
 
+        std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
         if (ft_compare_map(mymap, mymap2) == true)
             std::cout << GREEN << " OK!\n\n" << RESET;
         else

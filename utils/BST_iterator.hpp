@@ -52,8 +52,6 @@ namespace ft
                 return *this;
             }
 
-            Node<T>         &operator[](int n) { return (*(operator+(n))); }
-
             BST_iterator    &operator--(){
                 _previous();
                 return *this;
@@ -76,32 +74,31 @@ namespace ft
         private:
             Node<T> *_current;
 
-            void _previous()
-            {
-                if (_current->left && !_current->right)
-                    _current = NULL;
-		        else if (_current->left)
-                {
-			        _current = _current->left;
-			        while (_current->right)
-				        _current = _current->right;
-		        }
-                else
-			        _current = _current->parent;
+            void _previous(){
+                Node<T> *next;
+				if (!_current->left){
+					next = _current;
+					while (next->parent && next == next->parent->left)
+						next = next->parent;
+					next = next->parent;
+				}
+				else{
+					next = _current->left;
+					while (next->right)
+						next = next->right;
+				}
+                _current = next;
 	        }
 
-            void _next()
-            {
+            void _next(){
                 Node<T> *next;
-				if (!_current->right)
-				{
+				if (!_current->right){
 					next = _current;
 					while (next->parent && next == next->parent->right)
 						next = next->parent;
 					next = next->parent;
 				}
-				else
-				{
+				else{
 					next = _current->right;
 					while (next->left)
 						next = next->left;
