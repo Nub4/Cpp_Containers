@@ -65,3 +65,26 @@ bool     ft_compare_vector(std::vector<int> v1, ft::vector<int> v2)
 
     return true;
 }
+
+//template <class T, class U>
+bool    ft_compare_map(std::map<char, int> map1, ft::map<char, int> map2)
+{
+    std::cout << "|" << std::setw(8) << map1.size() << "|\n";
+    for (std::map<char, int>::iterator it = map1.begin(); it != map1.end(); ++it){
+        std::cout << it->first << " => " << it->second << '\n';
+    }
+
+    std::cout << "|" << std::setw(8) << map2.size() << "|\n";
+    for (ft::map<char, int>::iterator it2 = map2.begin(); it2 != map2.end(); ++it2){
+        std::cout << it2->first << " => " << it2->second << '\n';
+    }
+
+    if (map1.size() != map2.size())
+        return false;
+    ft::map<char, int>::iterator it2 = map2.begin();
+    for (std::map<char, int>::iterator it = map1.begin(); it != map1.end(); ++it, it2++)
+        if (it->first != it2->first && it->second != it2->second)
+            return false;
+
+    return true;
+}

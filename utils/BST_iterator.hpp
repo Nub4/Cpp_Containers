@@ -92,21 +92,22 @@ namespace ft
 
             void _next()
             {
-                if (_current->right)
-                {
-                    _current = _current->right;
-                    while (_current->left)
-                        _current = _current->left;
-                }
-                else if (_current->parent){
-                    if (_current->val.first > _current->parent->val.first)
-                        _current = NULL;
-                    else
-                        _current = _current->parent;
-                }
-                else if (!_current->parent && !_current->right)
-                    _current = NULL;
-	        }
+                Node<T> *next;
+				if (!_current->right)
+				{
+					next = _current;
+					while (next->parent && next == next->parent->right)
+						next = next->parent;
+					next = next->parent;
+				}
+				else
+				{
+					next = _current->right;
+					while (next->left)
+						next = next->left;
+				}
+                _current = next;
+	        }		    
     };
 }
 

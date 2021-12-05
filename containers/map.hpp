@@ -38,7 +38,7 @@ namespace ft
             typedef value_type*                                     pointer;
             typedef const value_type*                               const_pointer;
             typedef ft::BST_iterator<value_type>                    iterator;
-            typedef ft::BST_iterator<const value_type>              const_iterator;
+            typedef ft::BST_iterator<value_type>              const_iterator;
             typedef std::reverse_iterator<iterator>                 reverse_iterator;
             typedef std::reverse_iterator<const_iterator>           const_reverse_iterator;
             typedef ptrdiff_t                                       difference_type;
@@ -223,35 +223,39 @@ namespace ft
                 if (it != end())
                     return ft::make_pair(it, false);
                 Node<value_type> *temp = _rootNode;
-                if (temp->val.first > val.first)
-                    _node_insert_value(&temp->left, val, temp);
-                else
-                    _node_insert_value(&temp->right, val, temp);
+                int mark = 0;
+                while (mark == 0){
+                    if (temp->val.first > val.first){
+                        if (!temp->left){
+                            _node_insert_value(&temp->left, val, temp);
+                            mark = 1;
+                        }
+                        else
+                            temp = temp->left;
+                    }
+                    else{
+                        if (!temp->right){
+                            _node_insert_value(&temp->right, val, temp);
+                            mark = 1;
+                        } 
+                        else
+                            temp = temp->right;
+                    }
+                }
                 return ft::make_pair(iterator(temp), true);
             }
 
-            // iterator insert (iterator position, const value_type& val){
-            //     iterator it = begin();
-            //     while (it != end() && it != position)
-            //         it++;
-            //     if (_find_key(it, val.first) == 1)
-            //         return it;
-            //     _node_insert_value(&it, val);
-            //     return it;
-            // }
+            iterator insert (iterator position, const value_type& val){
+                (void)position;
+                ft::pair<iterator,bool> temp = insert(val);
+                return temp.first;
+            }
 
-            // template <class InputIterator>
-            // void insert (InputIterator first, InputIterator last){
-            //     iterator it = begin();
-            //     while (it != end() && it != first)
-            //         it++;
-            //     if (it == end())
-            //         return it;
-            //     while (first != end() && first != last){
-            //         _node_insert_value(&first, first->val);
-            //         first++;
-            //     }
-            // }
+            template <class InputIterator>
+            void insert (InputIterator first, InputIterator last){
+                for (; first != last; first++)
+                    insert(*first);
+            }
 
             void    clear() { _delete_all_nodes(_rootNode); }
 
@@ -412,7 +416,19 @@ namespace ft
                 return (root);
             }
 
+            Node<value_type>    *_first_node(Node<value_type> *root) const{
+                while (root->left)
+                    root = root->left;
+                return (root);
+            }
+
             Node<value_type>    *_last_node(Node<value_type> *root){
+                while (root->right)
+                    root = root->right;
+                return (root);
+            }
+
+            Node<value_type>    *_last_node(Node<value_type> *root) const{
                 while (root->right)
                     root = root->right;
                 return (root);
