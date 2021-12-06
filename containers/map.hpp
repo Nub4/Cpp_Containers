@@ -311,43 +311,11 @@ namespace ft
             size_type                           _size;
             std::allocator<Node<value_type> >   _node;
 
-            void _newNode(Node<value_type> **dest, ft::pair<Key, T> val, Node<value_type> *parent = NULL)
-		    {
+            void _newNode(Node<value_type> **dest, ft::pair<Key, T> val, Node<value_type> *parent = NULL){
 			    *dest = _node.allocate(1);
 			    _node.construct(*dest, Node<value_type>(val, parent));
 			    _size++;
 		    }
-
-            int     _find_key(Node<value_type> *root, const key_type& k)
-            {
-                if (!(root))
-                    return (0);
-                _find_node((root)->left, k);
-                if (root->val.first == k)
-                    return (1);
-                _find_node((root)->right, k);
-                return (0);
-            }
-
-            Node<value_type>    *_find_node(Node<value_type> *root, const key_type& k)
-            {
-                if (root->val.first == k)
-                    return (root);
-                if (root->left)
-                    _find_node((root)->left, k);
-                if (root->right)
-                    _find_node((root)->right, k);
-                return (0);
-            }
-
-            void    _apply_new_nodes(Node<value_type> *temp)
-            {
-                _rootNode = _createNode(temp->val);
-                if (temp->left)
-                    _node_apply_suffix(temp->left);
-                if (temp->right)
-                    _node_apply_suffix(temp->right);
-            }
 
             void    _delete_all_nodes(Node<value_type> *root)
             {
@@ -360,14 +328,6 @@ namespace ft
                 _node.destroy(root);
                 _node.deallocate(root, 1);
                 _size--;
-            }
-
-            Node<value_type>    *_min_value_node(Node<value_type> *node)
-            {
-                Node<value_type> *current = node;
-                while (current && current->left != NULL)
-                    current = current->left;
-                return current;
             }
 
             void _delete_node(Node<value_type> *n){
@@ -443,36 +403,6 @@ namespace ft
                 return (root);
             }
 
-            /* apply elements from top to the left and right */
-            // void    _node_apply_prefix(_Node *root, void (*apply)(void *))
-            // {
-            //     (*apply)(root->val);
-            //     if (root->left)
-            //         _node_apply_prefix(root->left, apply);
-            //     if (root->right)
-            //         _node_apply_prefix(root->right, apply);
-            // }
-
-            /* apply elements from left to the right (smallest one to the highest) */
-            // void    _node_apply_infix(_Node *root, void (*applyf)(void *))
-            // {
-            //     if (root->left)
-            //         _node_apply_infix(root->left, applyf);
-            //     (*applyf)(root->val);
-            //     if (root->right)
-            //         _node_apply_infix(root->right, applyf);
-            // }
-
-            /* apply elements from the bottom first left side, then right side and root last */
-            // void    _node_apply_suffix(_Node *root, void (*applyf)(void *))
-            // {
-            //     if (root->left)
-            //         _node_apply_suffix(root->left, applyf);
-            //     if (root->right)
-            //         _node_apply_suffix(root->right, applyf);
-            //     (*applyf)(root->val);
-            // }
-
             void    _node_insert_value(Node<value_type> **root, value_type value, Node<value_type> *p)
             {
                 if (!(*root))
@@ -482,19 +412,6 @@ namespace ft
                 else
                     _node_insert_value(&(*root)->right, value, *root);
             }
-
-            /* search value from the tree from the left to the right (smallest one to the highest) */
-            // void    *_node_search_value(_Node *root, void *value, int (*cmpf)(void *, void *))
-            // {
-            //     if (!(root))
-            //         return (0);
-            //     _node_search_value((root)->left, value, cmpf);
-            //     if ((*cmpf)(value, (*root)->val) == 0)
-            //         return (root);
-            //     _node_search_value((root)->right, value, cmpf);
-            //     return (0);
-            // }
-
     };
 }
 
