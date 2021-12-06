@@ -66,7 +66,6 @@ bool     ft_compare_vector(std::vector<int> v1, ft::vector<int> v2)
     return true;
 }
 
-//template <class T, class U>
 bool    ft_compare_map(std::map<char, int> map1, ft::map<char, int> map2)
 { 
     std::cout << "|" << std::setw(8) << map1.size() << "| ";
