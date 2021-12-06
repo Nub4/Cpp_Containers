@@ -64,7 +64,7 @@ namespace ft
                 insert(x.begin(), x.end());
             }
 
-            ~map() {}// clear(); }
+            ~map() { clear(); }
 
             map& operator= (const map& x){
                 _alloc = x._alloc;
@@ -265,26 +265,20 @@ namespace ft
                     it++;
                 if (it == end())
                     return ;
-                _rootNode = _delete_node(_rootNode, position->val.first);
+                _delete_node(position.node());
             }
 
             size_type erase (const key_type& k){
-                // if (_find_key(_rootNode, k) == 0)
-                //     return 0;
-                _rootNode = _delete_node(_rootNode, k);
+                iterator it = find(k);
+                if (it == end())
+                    return 0;
+                erase(it);
                 return 1;
             }
 
             void erase (iterator first, iterator last){
-                iterator it = begin();
-                while (it != end() && it != first)
-                    it++;
-                if (it == end())
-                    return ;
-                while (it != end() && it != last){
-                    _rootNode = _delete_node(_rootNode, it->val.first);
-                    it++;
-                }
+                while (first != last)
+                    erase(first++);
             }
 
             void swap (map& x){
@@ -378,37 +372,46 @@ namespace ft
                 return current;
             }
 
-            Node<value_type>    *_delete_node(Node<value_type> *root, key_type k)
-            {
-                if (root == NULL)
-                    return root;
-                if (k < root->val.first)
-                    root->left = _delete_node(root->left, k);
-                else if (k > root->val.first)
-                    root->right = _delete_node(root->right, k);
-                else {
-                    if (root->left==NULL and root->right==NULL)
-                        return NULL;
-                    else if (root->left == NULL) {
-                        Node<value_type> *temp = root->right;
-                        _node.destroy(root);
-                        _node.deallocate(root, 1);
-                        _size--;
-                        return temp;
-                    }
-                    else if (root->right == NULL) {
-                        Node<value_type> *temp = root->left;
-                        _node.destroy(root);
-                        _node.deallocate(root, 1);
-                        _size--;
-                        return temp;
-                    }
-                    Node<value_type> *temp = _min_value_node(root->right);
-                    root->val = temp->val;
-                    root->right = _delete_node(root->right, temp->val.first);
-                }
-                return root;
-            }
+            void _delete_node(Node<value_type> *n){
+				Node<value_type> *parent = n->parent;
+				if (!n->left && !n->right){
+					if (parent->right == n)
+						parent->right = 0;
+					else
+						parent->left = 0;
+                    _node.destroy(n);
+                    _node.deallocate(n, 1);
+                    _size--;
+					return ;
+			    }
+				if (n->right && !n->left){
+					if (parent->right == n)
+						parent->right = n->right;
+					else
+						parent->left = n->right;
+					n->right->parent = parent;
+                    _node.destroy(n);
+                    _node.deallocate(n, 1);
+                    _size--;
+					return ;
+				}
+				if (n->left && !n->right){
+					if (parent->right == n)
+						parent->right = n->left;
+					else
+						parent->left = n->left;
+					n->left->parent = parent;
+                    _node.destroy(n);
+                    _node.deallocate(n, 1);
+                    _size--;
+					return ;
+				}
+				Node<value_type> *next = (++iterator(n)).node();
+				if (!next)
+					next = (--iterator(n)).node();
+				ft::swap(next->val, n->val);
+				_delete_node(next);
+			};
 
             Node<value_type>    *_first_node(Node<value_type> *root){
                 while (root->left)

@@ -136,6 +136,14 @@ namespace ft
 		    return *this;
 		}
 	};
+
+    template <typename T>
+	void	swap(T &a, T &b)
+	{
+		T tmp = a;
+		a = b;
+		b = tmp;
+	};
 }
 
 #endif

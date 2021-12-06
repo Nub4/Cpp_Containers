@@ -27,6 +27,8 @@ namespace ft
             bool            operator!=(const BST_iterator &rhs) { return _current != rhs._current; }
             bool            operator==(const BST_iterator &rhs) { return _current == rhs._current; }
 
+            Node<T>         *node() { return _current; }
+
             T               &operator*() { return _current->val; }
             T               *operator->() { return &(operator*()); }
 
@@ -125,6 +127,8 @@ namespace ft
 
             bool            operator!=(const const_BST_iterator &rhs) { return _current != rhs._current; }
             bool            operator==(const const_BST_iterator &rhs) { return _current == rhs._current; }
+
+            Node<T>         *node() { return _current; }
 
             T               &operator*() const { return _current->val; }
             T               *operator->() const { return &(operator*()); }
@@ -225,6 +229,8 @@ namespace ft
             bool            operator!=(const reverse_BST_iterator &rhs) { return _current != rhs._current; }
             bool            operator==(const reverse_BST_iterator &rhs) { return _current == rhs._current; }
 
+            Node<T>         *node() { return _current; }
+
             T               &operator*() { return _current->val; }
             T               *operator->() { return &(operator*()); }
 
@@ -323,6 +329,8 @@ namespace ft
 
             bool            operator!=(const const_reverse_BST_iterator &rhs) { return _current != rhs._current; }
             bool            operator==(const const_reverse_BST_iterator &rhs) { return _current == rhs._current; }
+
+            Node<T>         *node() { return _current; }
 
             T               &operator*() const { return _current->val; }
             T               *operator->() const { return &(operator*()); }
