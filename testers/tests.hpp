@@ -15,7 +15,7 @@
 #define RED		"\033[31m"
 #define RESET	"\033[0m"
 
-//template <class T, class U>
+bool    ft_compare_map(std::map<char, std::string> map1, ft::map<char, std::string> map2);
 bool    ft_compare_map(std::map<char, int> map1, ft::map<char, int> map2);
 void    ft_map_testing();
 void    ft_stack_testing();

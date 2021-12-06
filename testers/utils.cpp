@@ -86,3 +86,23 @@ bool    ft_compare_map(std::map<char, int> map1, ft::map<char, int> map2)
 
     return true;
 }
+
+bool    ft_compare_map(std::map<char, std::string> map1, ft::map<char, std::string> map2)
+{ 
+    std::cout << "|" << std::setw(8) << map1.size() << "| ";
+    for (std::map<char, std::string>::iterator it = map1.begin(); it != map1.end(); ++it)
+        std::cout << "[" << it->first << ", " << it->second << "] ";
+
+    std::cout << "\n|" << std::setw(8) << map2.size() << "| ";
+    for (ft::map<char, std::string>::iterator it2 = map2.begin(); it2 != map2.end(); ++it2)
+        std::cout << "[" << it2->first << ", " << it2->second << "] ";
+
+    if (map1.size() != map2.size())
+        return false;
+    ft::map<char, std::string>::iterator it2 = map2.begin();
+    for (std::map<char, std::string>::iterator it = map1.begin(); it != map1.end(); ++it, it2++)
+        if (it->first != it2->first && it->second != it2->second)
+            return false;
+
+    return true;
+}

@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# include <limits>
 # include "../utils/utils.hpp"
 # include "../utils/BST_iterator.hpp"
 
@@ -67,10 +68,7 @@ namespace ft
             ~map() { clear(); }
 
             map& operator= (const map& x){
-                _alloc = x._alloc;
-                _comp = x._comp;
-                _rootNode = NULL;
-                _size = 0;
+                clear();
                 insert(x.begin(), x.end());
                 return *this;
             }
@@ -155,8 +153,8 @@ namespace ft
             }
 
             size_type count (const key_type& k) const{
-                iterator it = begin();
-                while (it != end() && k != it->val.first)
+                const_iterator it = begin();
+                while (it != end() && k != it->first)
                     it++;
                 if (it == end())
                     return 0;
@@ -165,21 +163,21 @@ namespace ft
 
             iterator lower_bound (const key_type& k){
                 iterator it = begin();
-                while (it != end() && k >= it->val.first)
+                while (it != end() && k != it->first)
                     it++;
                 return it;   
             }
 
             const_iterator lower_bound (const key_type& k) const{
                 const_iterator it = begin();
-                while (it != end() && k >= it->val.first)
+                while (it != end() && k != it->first)
                     it++;
                 return it;
             }
 
             iterator upper_bound (const key_type& k){
                 iterator it = begin();
-                while (it != end() && k >= it->val.first)
+                while (it != end() && k != it->first)
                     it++;
                 if (it == end())
                     return it;
@@ -188,7 +186,7 @@ namespace ft
 
             const_iterator upper_bound (const key_type& k) const{
                 const_iterator it = begin();
-                while (it != end() && k >= it->val.first)
+                while (it != end() && k != it->first)
                     it++;
                 if (it == end())
                     return it;
