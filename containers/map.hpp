@@ -39,8 +39,8 @@ namespace ft
             typedef const value_type*                               const_pointer;
             typedef ft::BST_iterator<value_type>                    iterator;
             typedef ft::const_BST_iterator<value_type>              const_iterator;
-            typedef std::reverse_iterator<iterator>                 reverse_iterator;
-            typedef std::reverse_iterator<const_iterator>           const_reverse_iterator;
+            typedef ft::reverse_BST_iterator<iterator>              reverse_iterator;
+            typedef ft::const_reverse_BST_iterator<const_iterator>  const_reverse_iterator;
             typedef ptrdiff_t                                       difference_type;
             typedef size_t                                          size_type;
 
