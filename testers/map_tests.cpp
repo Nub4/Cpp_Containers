@@ -181,7 +181,115 @@ void    ft_modifiers_map()
     else
         std::cout << RED << " False!\n\n" << RESET;
 
-    
+    // Clear:
+    std::map<char,int> my;
+    my['x']=100;
+    my['y']=200;
+    my['z']=300;
+
+    ft::map<char,int> my2;
+    my2['x']=100;
+    my2['y']=200;
+    my2['z']=300;
+
+    if (ft_compare_map(my, my2) == true)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+
+    my.clear();
+    my['a']=1101;
+    my['b']=2202;
+
+    my2.clear();
+    my2['a']=1101;
+    my2['b']=2202;
+
+    if (ft_compare_map(my, my2) == true)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+}
+
+void    ft_iterators_map()
+{
+    // Begin & End:
+    {
+        std::map<char,int> mymap;
+        mymap['b'] = 100;
+        mymap['a'] = 200;
+        mymap['c'] = 300;
+
+        ft::map<char,int> mymap2;
+        mymap2['b'] = 100;
+        mymap2['a'] = 200;
+        mymap2['c'] = 300;
+
+        if (ft_compare_map(mymap, mymap2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+    }
+    // rBegin & rEnd:
+    {
+        std::map<char,int> mymap;
+        mymap['x'] = 100;
+        mymap['y'] = 200;
+        mymap['z'] = 300;
+
+        ft::map<char,int> mymap2;
+        mymap2['x'] = 100;
+        mymap2['y'] = 200;
+        mymap2['z'] = 300;
+
+        std::cout << "|" << std::setw(8) << mymap.size() << "| ";
+        for (std::map<char,int>::reverse_iterator rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+            std::cout << "[" << rit->first << ", " << rit->second << "] ";
+
+        std::cout << "\n|" << std::setw(8) << mymap2.size() << "| ";
+        for (ft::map<char,int>::reverse_iterator rit2=mymap2.rbegin(); rit2!=mymap2.rend(); ++rit2)
+            std::cout << "[" << rit2->first << ", " << rit2->second << "] ";
+
+        if (mymap.size() == mymap2.size())
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+        int i = 0;
+        ft::map<char, int>::reverse_iterator it2 = mymap2.rbegin();
+        for (std::map<char, int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); ++it, it2++)
+            if (it->first != it2->first && it->second != it2->second)
+                i++;
+        if (i == 0)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+    }
+}
+
+void    ft_capacity_map()
+{
+    // Empty:
+    {
+        std::map<char,int> mymap;
+        mymap['a']=10;
+        mymap['b']=20;
+        mymap['c']=30;
+
+        ft::map<char,int> mymap2;
+        mymap2['a']=10;
+        mymap2['b']=20;
+        mymap2['c']=30;
+
+        while (!mymap.empty())
+        {
+            if (ft_compare_map(mymap, mymap2) == true)
+                std::cout << GREEN << " OK!\n\n" << RESET;
+            else
+                std::cout << RED << " False!\n\n" << RESET;
+            mymap.erase(mymap.begin());
+            mymap2.erase(mymap2.begin());
+        }
+    }
 }
 
 void    ft_map_testing()
@@ -191,4 +299,10 @@ void    ft_map_testing()
     ft_member_functions_map();
     std::cout << YELLOW << "\n--- Modifiers: ---\n" << RESET;
     ft_modifiers_map();
+    std::cout << YELLOW << "--- Iterators: ---\n" << RESET;
+    std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
+    ft_iterators_map();
+    std::cout << YELLOW << "--- Capacity: ---\n" << RESET;
+    std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
+    ft_capacity_map();   
 }

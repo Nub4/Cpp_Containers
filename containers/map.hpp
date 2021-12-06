@@ -39,8 +39,8 @@ namespace ft
             typedef const value_type*                               const_pointer;
             typedef ft::BST_iterator<value_type>                    iterator;
             typedef ft::const_BST_iterator<value_type>              const_iterator;
-            typedef ft::reverse_BST_iterator<iterator>              reverse_iterator;
-            typedef ft::const_reverse_BST_iterator<const_iterator>  const_reverse_iterator;
+            typedef ft::reverse_BST_iterator<value_type>              reverse_iterator;
+            typedef ft::const_reverse_BST_iterator<value_type>  const_reverse_iterator;
             typedef ptrdiff_t                                       difference_type;
             typedef size_t                                          size_type;
 
@@ -257,7 +257,7 @@ namespace ft
                     insert(*first);
             }
 
-            void    clear() { _delete_all_nodes(_rootNode); }
+            void    clear() { _delete_all_nodes(_rootNode); _rootNode = NULL; }
 
             void erase (iterator position){
                 iterator it = begin();
@@ -373,8 +373,16 @@ namespace ft
             }
 
             void _delete_node(Node<value_type> *n){
+                if (!n->left && !n->right && !n->parent)
+                {
+                    _node.destroy(n);
+                    _node.deallocate(n, 1);
+                    _size--;
+                    _rootNode = NULL;
+					return ;
+                }
 				Node<value_type> *parent = n->parent;
-				if (!n->left && !n->right){
+				if (!n->left && !n->right && parent){
 					if (parent->right == n)
 						parent->right = 0;
 					else
@@ -384,7 +392,7 @@ namespace ft
                     _size--;
 					return ;
 			    }
-				if (n->right && !n->left){
+				if (n->right && !n->left && parent){
 					if (parent->right == n)
 						parent->right = n->right;
 					else
@@ -395,7 +403,7 @@ namespace ft
                     _size--;
 					return ;
 				}
-				if (n->left && !n->right){
+				if (n->left && !n->right && parent){
 					if (parent->right == n)
 						parent->right = n->left;
 					else
@@ -467,7 +475,6 @@ namespace ft
             //     (*applyf)(root->val);
             // }
 
-            /* insert data, cmpf is compare function */
             void    _node_insert_value(Node<value_type> **root, value_type value, Node<value_type> *p)
             {
                 if (!(*root))
@@ -489,7 +496,6 @@ namespace ft
             //     _node_search_value((root)->right, value, cmpf);
             //     return (0);
             // }
-
 
     };
 }
