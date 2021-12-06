@@ -158,5 +158,4 @@ void    ft_stack_testing()
     // VECTOR
     std::cout << GREEN << "\n--- STACK TESTING (VECTOR) ----\n\n" << RESET;
     ft_vector_stack();
-    // MAP
 }
