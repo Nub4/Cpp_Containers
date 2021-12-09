@@ -112,10 +112,7 @@ namespace ft
                 _size++;
             }
 
-            void        pop_back() {
-                if (_size)
-                    _size--;
-            }
+            void        pop_back() { _size--; }
         
             void        swap(vector &x) {
                 size_type       temp_size = x._size;
