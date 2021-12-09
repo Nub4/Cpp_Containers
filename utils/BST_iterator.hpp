@@ -432,7 +432,7 @@ namespace ft
 
     template <class T>
     bool operator!=(const BST_iterator<T> &lhs, const const_BST_iterator<T> &rhs){
-        return lhs.getCurrent() == rhs.getCurrent();
+        return lhs.getCurrent() != rhs.getCurrent();
     };
 
     template <class T>
@@ -442,7 +442,7 @@ namespace ft
 
     template <class T>
     bool operator!=(const reverse_BST_iterator<T> &lhs, const const_reverse_BST_iterator<T> &rhs){
-        return lhs.getCurrent() == rhs.getCurrent();
+        return lhs.getCurrent() != rhs.getCurrent();
     };
 }
 

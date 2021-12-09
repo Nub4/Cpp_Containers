@@ -118,6 +118,8 @@ namespace ft
                 return oldCopy;
             }
 
+            T       *getCurrent() const { return _current; }
+
             operator random_access_iterator<T const>(void) const{
 			    return (random_access_iterator<T const>(_current));
 		    }
@@ -191,12 +193,34 @@ namespace ft
                 return oldCopy;
             }
 
+            T       *getCurrent() const { return _current; }
+
             operator reverse_iterator<T const>(void) const{
 			    return (reverse_iterator<T const>(_current));
 		    }
 
             private:
                 T   *_current;
+    };
+
+    template <class T>
+    bool operator==(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator!=(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() != rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator==(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator!=(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() != rhs.getCurrent();
     };
 }
 
