@@ -73,6 +73,8 @@ namespace ft
                 return oldCopy;
             }
 
+            Node<T>     *getCurrent() const { return _current; }
+
         private:
             Node<T> *_current;
 
@@ -117,6 +119,8 @@ namespace ft
             const_BST_iterator(Node<T> *initLoc) : _current(initLoc) {}
             const_BST_iterator(const const_BST_iterator &src)
             : _current(src._current) {}
+            const_BST_iterator(const BST_iterator<T> &src)
+            : _current(src.getCurrent()) {}
 
             ~const_BST_iterator() {}
 
@@ -173,6 +177,9 @@ namespace ft
                 _next();
                 return oldCopy;
             }
+
+            Node<T>     *getCurrent() const { return _current; }
+
 
         private:
             Node<T> *_current;
@@ -275,6 +282,8 @@ namespace ft
                 return oldCopy;
             }
 
+            Node<T>     *getCurrent() const { return _current; }
+
         private:
             Node<T> *_current;
 
@@ -319,6 +328,8 @@ namespace ft
             const_reverse_BST_iterator(Node<T> *initLoc) : _current(initLoc) {}
             const_reverse_BST_iterator(const const_reverse_BST_iterator &src)
             : _current(src._current) {}
+            const_reverse_BST_iterator(const reverse_BST_iterator<T> &src)
+            : _current(src.getCurrent()) {}
 
             ~const_reverse_BST_iterator() {}
 
@@ -376,6 +387,8 @@ namespace ft
                 return oldCopy;
             }
 
+            Node<T>     *getCurrent() const { return _current; }
+
         private:
             Node<T> *_current;
 
@@ -411,7 +424,26 @@ namespace ft
                 _current = next;
 	        }		    
     };
-    
+
+    template <class T>
+    bool operator==(const BST_iterator<T> &lhs, const const_BST_iterator<T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator!=(const BST_iterator<T> &lhs, const const_BST_iterator<T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator==(const reverse_BST_iterator<T> &lhs, const const_reverse_BST_iterator<T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator!=(const reverse_BST_iterator<T> &lhs, const const_reverse_BST_iterator<T> &rhs){
+        return lhs.getCurrent() == rhs.getCurrent();
+    };
 }
 
 #endif
