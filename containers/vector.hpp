@@ -71,10 +71,7 @@ namespace ft
                 assign(first, last);
             }
 
-            ~vector() {
-                clear();
-                _alloc.deallocate(_arr, _capacity);
-            }
+            ~vector() { _alloc.deallocate(_arr, _capacity); }
 
             vector  &operator=(const vector &x){
                 _size = x._size;
@@ -112,7 +109,10 @@ namespace ft
                 _size++;
             }
 
-            void        pop_back() { _size--; }
+            void        pop_back() {
+                _alloc.destroy(_arr + _size);
+                _size--; 
+            }
         
             void        swap(vector &x) {
                 size_type       temp_size = x._size;

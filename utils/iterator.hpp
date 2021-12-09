@@ -97,7 +97,7 @@ namespace ft
                 return *this;
             }
 
-            T   &operator[](int n) const { return (*(operator+(n))); }
+            T   &operator[](int n) { return (*(operator+(n))); }
 
             random_access_iterator  &operator--(){
                 _current--;
@@ -166,7 +166,7 @@ namespace ft
                 return *this;
             }
 
-            T   &operator[](int n) const { return (*(operator-(n))); }
+            T   &operator[](int n) { return (*(operator-(n))); }
 
             reverse_iterator  &operator--(){
                 _current++;
