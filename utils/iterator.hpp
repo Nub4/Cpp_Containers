@@ -118,6 +118,10 @@ namespace ft
                 return oldCopy;
             }
 
+            operator random_access_iterator<T const>(void) const{
+			    return (random_access_iterator<T const>(_current));
+		    }
+
             private:
                 T   *_current;
     };
@@ -186,6 +190,10 @@ namespace ft
                 _current--;
                 return oldCopy;
             }
+
+            operator reverse_iterator<T const>(void) const{
+			    return (reverse_iterator<T const>(_current));
+		    }
 
             private:
                 T   *_current;
