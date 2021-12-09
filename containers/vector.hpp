@@ -113,8 +113,8 @@ namespace ft
             }
 
             void        pop_back() {
-                 _alloc.destroy(_arr + _size);    
-                _size--;
+                if (_size)
+                    _size--;
             }
         
             void        swap(vector &x) {

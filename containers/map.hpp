@@ -217,12 +217,11 @@ namespace ft
                     _node_insert_value(&_rootNode, val, NULL);
                     return ft::make_pair(iterator(_rootNode), true);
                 }
-                iterator it = find(val.first);
-                if (it != end())
-                    return ft::make_pair(it, false);
                 Node<value_type> *temp = _rootNode;
                 int mark = 0;
                 while (mark == 0){
+                    if (val.first == temp->val.first)
+                        return ft::make_pair(iterator(temp), false);
                     if (temp->val.first > val.first){
                         if (!temp->left){
                             _node_insert_value(&temp->left, val, temp);
@@ -280,20 +279,8 @@ namespace ft
             }
 
             void swap (map& x){
-                size_type                           temp_size = x._size;
-                key_compare                         temp_comp = x._comp;
-                Node<value_type>                    *temp_rootNode = x._rootNode;
-                allocator_type                      temp_alloc = x._alloc;
-
-                x._size = _size;
-                x._comp = _comp;
-                x._rootNode = _rootNode;
-                x._alloc = _alloc;
-
-                _size = temp_size;
-                _comp = temp_comp;
-                _rootNode = temp_rootNode;
-                _alloc = temp_alloc;
+                ft::swap(_size, x._size);
+                ft::swap(_rootNode, x._rootNode);
             }
 
         /* Observes */
