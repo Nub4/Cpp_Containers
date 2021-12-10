@@ -559,6 +559,9 @@ void    ft_iterator_compare_2()
 {
     std::map<int, int> v;
     v[2]=19;
+    v[3]=19;
+    v[4]=19;
+    v[5]=19;
     std::map<int, int>::iterator it = v.begin();
     std::map<int, int>::const_iterator it2 = v.begin();
     std::map<int, int>::reverse_iterator rit = v.rend();
@@ -566,6 +569,9 @@ void    ft_iterator_compare_2()
 
     ft::map<int, int> vec;
     vec[2]=19;
+    vec[3]=19;
+    vec[4]=19;
+    vec[5]=19;
     ft::map<int, int>::iterator itt = vec.begin();
     ft::map<int, int>::const_iterator itt2 = vec.begin();
     ft::map<int, int>::reverse_iterator ritt = vec.rend();
