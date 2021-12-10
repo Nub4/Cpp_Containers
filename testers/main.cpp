@@ -14,6 +14,6 @@ int	main(int ac, char **av)
 	else if (s == "map")
 		ft_map_testing();
 	else
-		std::cout << "Error: wrong argument, needed 'vector' or 'map'\n";
+		std::cout << "Error: wrong argument, needed 'vector', 'stack' or 'map'\n";
 	return 0;
 }
