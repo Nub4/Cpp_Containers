@@ -125,14 +125,14 @@ namespace ft
 
             reverse_iterator         rend(){
                 if (!_size)
-                    return reverse_iterator(_rootNode->left);
+                    return reverse_iterator(_rootNode);
                 Node<value_type> *temp = _first_node(_rootNode);
                 return reverse_iterator(temp->left);
             }
 
             const_reverse_iterator   rend() const{
-                if (!_size || !_rootNode->left)
-                    return const_reverse_iterator(_rootNode->left);
+                if (!_size)
+                    return const_reverse_iterator(_rootNode);
                 Node<value_type> *temp = _first_node(_rootNode);
                 return const_reverse_iterator(temp->left);
             }

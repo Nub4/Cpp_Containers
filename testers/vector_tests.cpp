@@ -727,7 +727,7 @@ void    ft_iterator_compare()
     int mark = 0;
     int mark2 = 0;
 
-    std::cout << " iterator & const_iterator compare '=='";
+    std::cout << "iterator & const_iterator compare '=='";
     if (it==it2) mark++;
     if (itt==itt2) mark2++;
     if (mark == mark2)
@@ -735,7 +735,7 @@ void    ft_iterator_compare()
     else
         std::cout << RED << " False!\n\n" << RESET;
     
-    std::cout << " iterator & const_iterator compare '!='";
+    std::cout << "iterator & const_iterator compare '!='";
     if (it!=it2) mark++;
     if (itt!=itt2) mark2++;
     if (mark == mark2)
@@ -743,7 +743,7 @@ void    ft_iterator_compare()
     else
         std::cout << RED << " False!\n\n" << RESET;
 
-    std::cout << " reverse_iterator & const_reverse_iterator compare '=='";
+    std::cout << "reverse_iterator & const_reverse_iterator compare '=='";
     if (rit==rit2) mark++;
     if (ritt==ritt2) mark2++;
     if (mark == mark2)
@@ -751,7 +751,7 @@ void    ft_iterator_compare()
     else
         std::cout << RED << " False!\n\n" << RESET;
     
-    std::cout << " reverse_iterator & const_reverse_iterator compare '!='";
+    std::cout << "reverse_iterator & const_reverse_iterator compare '!='";
     if (rit!=rit2) mark++;
     if (ritt!=ritt2) mark2++;
     if (mark == mark2)

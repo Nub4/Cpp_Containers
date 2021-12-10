@@ -555,6 +555,58 @@ void    ft_operations()
     }
 }
 
+void    ft_iterator_compare_2()
+{
+    std::map<int, int> v;
+    v[2]=19;
+    std::map<int, int>::iterator it = v.begin();
+    std::map<int, int>::const_iterator it2 = v.begin();
+    std::map<int, int>::reverse_iterator rit = v.rend();
+    std::map<int, int>::const_reverse_iterator rit2 = v.rend();
+
+    ft::map<int, int> vec;
+    vec[2]=19;
+    ft::map<int, int>::iterator itt = vec.begin();
+    ft::map<int, int>::const_iterator itt2 = vec.begin();
+    ft::map<int, int>::reverse_iterator ritt = vec.rend();
+    ft::map<int, int>::const_reverse_iterator ritt2 = vec.rend();
+
+    int mark = 0;
+    int mark2 = 0;
+
+    std::cout << "iterator & const_iterator compare '=='";
+    if (it==it2) mark++;
+    if (itt==itt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+    
+    std::cout << "iterator & const_iterator compare '!='";
+    if (it!=it2) mark++;
+    if (itt!=itt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+
+    std::cout << "reverse_iterator & const_reverse_iterator compare '=='";
+    if (rit==rit2) mark++;
+    if (ritt==ritt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+    
+    std::cout << "reverse_iterator & const_reverse_iterator compare '!='";
+    if (rit!=rit2) mark++;
+    if (ritt!=ritt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+}
+
 void    ft_map_testing()
 {
     std::cout << YELLOW << "--- Member functions and allocator: ---\n" << RESET;
@@ -571,4 +623,6 @@ void    ft_map_testing()
     std::cout << YELLOW << "--- Operations: ---\n" << RESET;
     std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
     ft_operations();
+    std::cout << YELLOW << "--- Iterator compare: ---\n" << RESET;
+    ft_iterator_compare_2();
 }
