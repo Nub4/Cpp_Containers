@@ -708,6 +708,58 @@ void    ft_member_functions_2()
             std::cout << RED << " False!\n\n" << RESET;
 }
 
+void    ft_iterator_compare()
+{
+    std::vector<int> v;
+    v.push_back(19);
+    std::vector<int>::iterator it = v.begin();
+    std::vector<int>::const_iterator it2 = v.begin();
+    std::vector<int>::reverse_iterator rit = v.rend();
+    std::vector<int>::const_reverse_iterator rit2 = v.rend();
+
+    ft::vector<int> vec;
+    vec.push_back(19);
+    ft::vector<int>::iterator itt = vec.begin();
+    ft::vector<int>::const_iterator itt2 = vec.begin();
+    ft::vector<int>::reverse_iterator ritt = vec.rend();
+    ft::vector<int>::const_reverse_iterator ritt2 = vec.rend();
+
+    int mark = 0;
+    int mark2 = 0;
+
+    std::cout << " iterator & const_iterator compare '=='";
+    if (it==it2) mark++;
+    if (itt==itt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+    
+    std::cout << " iterator & const_iterator compare '!='";
+    if (it!=it2) mark++;
+    if (itt!=itt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+
+    std::cout << " reverse_iterator & const_reverse_iterator compare '=='";
+    if (rit==rit2) mark++;
+    if (ritt==ritt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+    
+    std::cout << " reverse_iterator & const_reverse_iterator compare '!='";
+    if (rit!=rit2) mark++;
+    if (ritt!=ritt2) mark2++;
+    if (mark == mark2)
+        std::cout << GREEN << " OK!\n\n" << RESET;
+    else
+        std::cout << RED << " False!\n\n" << RESET;
+}
+
 void    ft_vector_testing()
 {
     // INTS:
@@ -739,4 +791,6 @@ void    ft_vector_testing()
     ft_element_access_2();
     std::cout << YELLOW << "--- function overloads ---\n" << RESET << std::endl;
     ft_non_member_function_overloads_2();
+    std::cout << YELLOW << "--- iterator compare ---\n" << RESET << std::endl;
+    ft_iterator_compare();
 }
