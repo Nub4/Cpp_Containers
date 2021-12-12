@@ -204,11 +204,11 @@ namespace ft
         /* Element access: */
 
             mapped_type& operator[] (const key_type& k){
-                iterator it = find(k);
-                if (it == end())
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                if (temp == NULL)
                     insert(ft::make_pair(k, mapped_type()));
-                iterator it2 = find(k);
-                return it2->second;
+                Node<value_type> *temp2 = _find_node(_rootNode, k);
+                return temp2->val.second;
             }
 
         /* Modifiers */
@@ -257,19 +257,17 @@ namespace ft
             void    clear() { _delete_all_nodes(_rootNode); _rootNode = NULL; }
 
             void erase (iterator position){
-                iterator it = begin();
-                while (it != end() && it != position)
-                    it++;
-                if (it == end())
+                Node<value_type> *temp = _find_node(_rootNode, position->first);
+                if (temp == NULL)
                     return ;
-                _delete_node(position.node());
+                _delete_node(temp);
             }
 
             size_type erase (const key_type& k){
-                iterator it = find(k);
-                if (it == end())
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                if (temp == NULL)
                     return 0;
-                erase(it);
+                _delete_node(temp);
                 return 1;
             }
 
@@ -303,6 +301,15 @@ namespace ft
 			    _node.construct(*dest, Node<value_type>(val, parent));
 			    _size++;
 		    }
+
+            Node<value_type>    *_find_node(Node<value_type> *root, const key_type& k)
+            {
+                if (root == NULL || root->val.first == k)
+                    return root;
+                if (root->val.first < k)
+                    return _find_node(root->right, k);
+                return _find_node(root->left, k);
+            }
 
             void    _delete_all_nodes(Node<value_type> *root)
             {
@@ -359,12 +366,19 @@ namespace ft
                     _size--;
 					return ;
 				}
-				Node<value_type> *next = (++iterator(n)).node();
-				if (!next)
-					next = (--iterator(n)).node();
-				ft::swap(next->val, n->val);
-				_delete_node(next);
+                Node<value_type> *temp = minValueNode(n->right);     
+                n->val = temp->val;
+                _delete_node(n->right);
 			};
+
+
+            Node<value_type>    *minValueNode(Node<value_type> *node)
+            {
+                Node<value_type> *current = node;
+                while (current && current->left != NULL)
+                    current = current->left;
+                return current;
+            }
 
             Node<value_type>    *_first_node(Node<value_type> *root){
                 while (root->left)

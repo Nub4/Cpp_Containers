@@ -62,7 +62,7 @@ namespace ft
 
             template<class InputIterator>
             vector(InputIterator first, InputIterator last,
-            const allocator_type &alloc = allocator_type())
+            const allocator_type &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL)
             {
                 _alloc = alloc;
                 _size = _distance(first, last);
@@ -85,7 +85,7 @@ namespace ft
 
             /* Modifiers: */
             template<class InputIterator>
-            void        assign(InputIterator first, InputIterator last){
+            void        assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL){
                 clear();
                 for ( ; first != last; first++)
                     push_back(*first);
@@ -176,7 +176,7 @@ namespace ft
             }
 
             template<class InputIterator>
-            void        insert(iterator position, InputIterator first, InputIterator last){
+            void        insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = NULL){
                 if (position == end()){
                     while (first != last){
                         push_back(*first);

@@ -14,7 +14,7 @@ void    ft_member_functions()
 
         // MY:
 		ft::vector<int> vv1(7); 
-		ft::vector<int> vv2((size_t)4, 42);
+		ft::vector<int> vv2(4, 42);
         ft::vector<int> vv3(vv2);
 		ft::vector<int> vv4 = vv1;
         ft::vector<int> vv5; 
@@ -71,8 +71,8 @@ void    ft_modifiers()
         v2.pop_back();
     }
     v1.swap(v2);
-    v3.assign((size_t)4, 19);
-    v4.assign((size_t)6, 42);
+    v3.assign(4, 19);
+    v4.assign(6, 42);
     std::vector<int> v5(v2.begin(), v2.end());
 
     // MY:
@@ -90,8 +90,8 @@ void    ft_modifiers()
         vv2.pop_back();
     }
     vv1.swap(vv2);
-    vv3.assign((size_t)4, 19);
-    vv4.assign((size_t)6, 42);
+    vv3.assign(4, 19);
+    vv4.assign(6, 42);
     ft::vector<int> vv5(vv2.begin(), vv2.end());
 
     // COMPARE:
@@ -130,10 +130,10 @@ void    ft_modifiers()
         vv2[i] = i;
     }
     v4.insert(v4.begin() + 2, 22);
-    v3.insert(v3.begin() +3, (size_t)10, 100);
+    v3.insert(v3.begin() +3, 10, 100);
     v2.insert(v2.begin() + 2, v2.begin() + 3, v2.end() - 2);
     vv4.insert(vv4.begin() + 2, 22);
-    vv3.insert(vv3.begin() + 3, (size_t)10, 100);
+    vv3.insert(vv3.begin() + 3, 10, 100);
     vv2.insert(vv2.begin() + 2, vv2.begin() + 3, vv2.end() - 2);
     for (size_t i = 0; i < v6.size(); i++){
         v6[i] = i;
@@ -272,10 +272,10 @@ void    ft_element_access()
 
 void    ft_non_member_function_overloads()
 {
-    std::vector<int> foo ((size_t)3,100);
-    std::vector<int> bar ((size_t)2,200);
-    ft::vector<int> foo2 ((size_t)3,100);
-    ft::vector<int> bar2 ((size_t)2,200);
+    std::vector<int> foo (3,100);
+    std::vector<int> bar (2,200);
+    ft::vector<int> foo2 (3,100);
+    ft::vector<int> bar2 (2,200);
     int mark = 0;
     int mark2 = 0;
 
@@ -514,8 +514,8 @@ void    ft_modifiers_2()
         v2.pop_back();
     }
     v1.swap(v2);
-    v3.assign((size_t)4, "lol");
-    v4.assign((size_t)6, "boom");
+    v3.assign(4, "lol");
+    v4.assign(6, "boom");
     std::vector<std::string> v5(v2.begin(), v2.end());
 
     // MY:
@@ -539,8 +539,8 @@ void    ft_modifiers_2()
         vv2.pop_back();
     }
     vv1.swap(vv2);
-    vv3.assign((size_t)4, "lol");
-    vv4.assign((size_t)6, "boom");
+    vv3.assign(4, "lol");
+    vv4.assign(6, "boom");
     ft::vector<std::string> vv5(vv2.begin(), vv2.end());
 
     // COMPARE:
@@ -591,10 +591,10 @@ void    ft_modifiers_2()
         }
     }
     v4.insert(v4.begin() + 2, "VUF");
-    v3.insert(v3.begin() +3, (size_t)10, "BOOM");
+    v3.insert(v3.begin() +3, 10, "BOOM");
     v2.insert(v2.begin() + 2, v2.begin() + 3, v2.end() - 2);
     vv4.insert(vv4.begin() + 2, "VUF");
-    vv3.insert(vv3.begin() + 3, (size_t)10, "BOOM");
+    vv3.insert(vv3.begin() + 3, 10, "BOOM");
     vv2.insert(vv2.begin() + 2, vv2.begin() + 3, vv2.end() - 2);
     for (size_t i = 0; i < v6.size(); i++){
         if (i % 2 == 0){
@@ -668,7 +668,7 @@ void    ft_member_functions_2()
 
         // MY:
 		ft::vector<std::string> vv1(7); 
-		ft::vector<std::string> vv2((size_t)4, "james");
+		ft::vector<std::string> vv2(4, "james");
         ft::vector<std::string> vv3(vv2);
 		ft::vector<std::string> vv4 = vv1;
         ft::vector<std::string> vv5; 

@@ -160,6 +160,7 @@ void    ft_modifiers_map()
 
     ft::map<char,int> m2;
     ft::map<char,int>::iterator i2;
+    ft::map<char,int>::iterator i3;
     m2['a']=10;
     m2['b']=20;
     m2['c']=30;
@@ -170,7 +171,9 @@ void    ft_modifiers_map()
     m2.erase (i2);
     m2.erase ('c');
     i2=m2.find ('e');
-    m2.erase ( i2, m2.end() );
+    i3=m2.find ('f') + 1; //
+    m2.erase ( i2, i3);
+ //   m2.erase ( i2, m2.end() );
 
     if (ft_compare_map(m, m2) == true)
         std::cout << GREEN << " OK!\n\n" << RESET;
