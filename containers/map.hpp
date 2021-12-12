@@ -139,58 +139,44 @@ namespace ft
 
         /* Operations: */
             iterator    find(const key_type& k){
-                iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                return it;
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                return iterator(temp);
             }
 
             const_iterator find (const key_type& k) const{
-                const_iterator it = begin();
-                while (it != end() && k != it->val.first)
-                    it++;
-                return it;
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                return const_iterator(temp);
             }
 
             size_type count (const key_type& k) const{
-                const_iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                if (it == end())
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                if (temp == NULL)
                     return 0;
                 return 1;
             }
 
             iterator lower_bound (const key_type& k){
-                iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                return it;   
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                return iterator(temp);   
             }
 
             const_iterator lower_bound (const key_type& k) const{
-                const_iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                return it;
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                return const_iterator(temp);
             }
 
             iterator upper_bound (const key_type& k){
-                iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                if (it == end())
-                    return it;
-                return (it + 1);
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                if (temp == NULL)
+                    return iterator(temp);
+                return iterator(temp) + 1;
             }
 
             const_iterator upper_bound (const key_type& k) const{
-                const_iterator it = begin();
-                while (it != end() && k != it->first)
-                    it++;
-                if (it == end())
-                    return it;
-                return (it + 1);
+                Node<value_type> *temp = _find_node(_rootNode, k);
+                if (temp == NULL)
+                    return const_iterator(temp);
+                return const_iterator(temp) + 1;
             }
 
             ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
@@ -302,7 +288,7 @@ namespace ft
 			    _size++;
 		    }
 
-            Node<value_type>    *_find_node(Node<value_type> *root, const key_type& k)
+            Node<value_type>    *_find_node(Node<value_type> *root, const key_type& k) const
             {
                 if (root == NULL || root->val.first == k)
                     return root;
@@ -366,13 +352,13 @@ namespace ft
                     _size--;
 					return ;
 				}
-                Node<value_type> *temp = minValueNode(n->right);     
+                Node<value_type> *temp = _minValueNode(n->right);     
                 n->val = temp->val;
                 _delete_node(n->right);
 			};
 
 
-            Node<value_type>    *minValueNode(Node<value_type> *node)
+            Node<value_type>    *_minValueNode(Node<value_type> *node)
             {
                 Node<value_type> *current = node;
                 while (current && current->left != NULL)
