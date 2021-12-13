@@ -71,6 +71,10 @@ namespace ft
 
             bool    operator!=(const random_access_iterator &rhs) { return _current != rhs._current; }
             bool    operator==(const random_access_iterator &rhs) { return _current == rhs._current; }
+            bool    operator>(const random_access_iterator &rhs) { return _current > rhs._current; }
+			bool    operator>=(const random_access_iterator &rhs) { return _current >= rhs._current; }
+			bool    operator<(const random_access_iterator &rhs) { return _current < rhs._current; }
+			bool    operator<=(const random_access_iterator &rhs) { return _current <= rhs._current; }
 
             T       &operator*() const { return *_current; }
             T       *operator->() const { return &(operator*()); }
@@ -146,6 +150,10 @@ namespace ft
 
             bool    operator!=(const reverse_iterator &rhs) { return _current != rhs._current; }
             bool    operator==(const reverse_iterator &rhs) { return _current == rhs._current; }
+            bool    operator>(const reverse_iterator &rhs) { return _current > rhs._current; }
+			bool    operator>=(const reverse_iterator &rhs) { return _current >= rhs._current; }
+			bool    operator<(const reverse_iterator &rhs) { return _current < rhs._current; }
+			bool    operator<=(const reverse_iterator &rhs) { return _current <= rhs._current; }
 
             T       &operator*() const { return *_current; }
             T       *operator->() const { return &(operator*()); }
