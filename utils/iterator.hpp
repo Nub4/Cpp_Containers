@@ -215,10 +215,30 @@ namespace ft
     bool operator==(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
         return lhs.getCurrent() == rhs.getCurrent();
     };
-
+    
     template <class T>
     bool operator!=(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
         return lhs.getCurrent() != rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator<(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() < rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator<=(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() <= rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator>(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() > rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator>=(const random_access_iterator<T> &lhs, const random_access_iterator<const T> &rhs){
+        return lhs.getCurrent() >= rhs.getCurrent();
     };
 
     template <class T>
@@ -229,6 +249,26 @@ namespace ft
     template <class T>
     bool operator!=(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
         return lhs.getCurrent() != rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator<(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() < rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator<=(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() <= rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator>(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() > rhs.getCurrent();
+    };
+
+    template <class T>
+    bool operator>=(const reverse_iterator<T> &lhs, const reverse_iterator<const T> &rhs){
+        return lhs.getCurrent() >= rhs.getCurrent();
     };
 }
 
