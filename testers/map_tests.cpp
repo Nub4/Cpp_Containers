@@ -616,6 +616,98 @@ void    ft_iterator_compare_2()
         std::cout << RED << " False!\n\n" << RESET;
 }
 
+void    ft_erase_insert()
+{
+    {
+		std::map<char,int> mymap;
+        std::map<char,int>::iterator it;
+        mymap['a']=50;
+        mymap['b']=100;
+        mymap['c']=150;
+        mymap['d']=200;
+		mymap['e']=250;
+        mymap['f']=300;
+        it = mymap.find('d');
+        std::cout << "STL iterator before and after:\n" << it->first << " " << it->second << std::endl;
+        mymap.erase('b');
+        mymap.erase('c');
+        mymap.erase('f');
+        mymap['b']=100;
+        mymap['c']=150;
+        mymap['f']=300;
+        std::cout << it->first << " " << it->second << "\nMY iterator before and after:" << std::endl;
+
+        ft::map<char,int> mymap2;
+        ft::map<char,int>::iterator it2;
+        mymap2['a']=50;
+        mymap2['b']=100;
+        mymap2['c']=150;
+        mymap2['d']=200;
+		mymap2['e']=150;
+        mymap2['f']=200;
+        it2 = mymap2.find('d');
+        std::cout << it2->first << " " << it2->second << std::endl;
+        mymap2.erase('b');
+        mymap2.erase('c');
+        mymap2.erase('f');
+        mymap2['b']=100;
+        mymap2['c']=150;
+        mymap2['f']=300;
+        std::cout << it2->first << " " << it2->second << std::endl;
+
+        if (ft_compare_map(mymap, mymap2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+	}
+	{
+		std::map<char,int> mymap;
+        std::map<char,int>::iterator it;
+        mymap['a']=50;
+        mymap['b']=100;
+        mymap['c']=150;
+        mymap['d']=200;
+		mymap['e']=250;
+        mymap['f']=300;
+        it = mymap.find('a');
+        std::cout << "STL iterator before and after:\n" << it->first << " " << it->second << std::endl;
+        mymap.erase('b');
+        mymap.erase('c');
+		mymap.erase('d');
+		mymap.erase('e');
+        mymap.erase('f');
+        mymap['c']=150;
+		mymap['d']=200;
+		mymap['e']=250;
+        std::cout << it->first << " " << it->second << "\nMY iterator before and after:" << std::endl;
+
+        ft::map<char,int> mymap2;
+        ft::map<char,int>::iterator it2;
+        mymap2['a']=50;
+        mymap2['b']=100;
+        mymap2['c']=150;
+        mymap2['d']=200;
+		mymap2['e']=150;
+        mymap2['f']=200;
+        it2 = mymap2.find('a');
+        std::cout << it2->first << " " << it2->second << std::endl;
+        mymap2.erase('b');
+        mymap2.erase('c');
+		mymap2.erase('d');
+		mymap2.erase('e');
+        mymap2.erase('f');
+        mymap2['c']=150;
+		mymap2['d']=200;
+		mymap2['e']=250;
+        std::cout << it2->first << " " << it2->second << std::endl;
+
+        if (ft_compare_map(mymap, mymap2) == true)
+            std::cout << GREEN << " OK!\n\n" << RESET;
+        else
+            std::cout << RED << " False!\n\n" << RESET;
+	}
+}
+
 void    ft_map_testing()
 {
     std::cout << YELLOW << "--- Member functions and allocator: ---\n" << RESET;
@@ -634,4 +726,7 @@ void    ft_map_testing()
     ft_operations();
     std::cout << YELLOW << "--- Iterator compare: ---\n" << RESET;
     ft_iterator_compare_2();
+    std::cout << YELLOW << "--- Iterator check with insert and erase: ---\n" << RESET;
+    std::cout << YELLOW << "|" << std::setw(9) << "Size|" << "Range" << RESET << std::endl;
+    ft_erase_insert();
 }
