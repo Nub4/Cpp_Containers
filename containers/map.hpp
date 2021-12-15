@@ -33,17 +33,18 @@ namespace ft
                         return comp(x.first, y.first);
                     }
             };
-            typedef Alloc                                           allocator_type;
-            typedef value_type&                                     reference;
-            typedef const value_type&                               const_reference;
-            typedef value_type*                                     pointer;
-            typedef const value_type*                               const_pointer;
-            typedef ft::BST_iterator<value_type>                    iterator;
-            typedef ft::const_BST_iterator<value_type>              const_iterator;
-            typedef ft::reverse_BST_iterator<value_type>              reverse_iterator;
-            typedef ft::const_reverse_BST_iterator<value_type>  const_reverse_iterator;
-            typedef ptrdiff_t                                       difference_type;
-            typedef size_t                                          size_type;
+            typedef Alloc                                                               allocator_type;
+            typedef value_type&                                                         reference;
+            typedef const value_type&                                                   const_reference;
+            typedef value_type*                                                         pointer;
+            typedef const value_type*                                                   const_pointer;
+            typedef ft::BST_iterator<value_type>                                        iterator;
+            typedef ft::const_BST_iterator<value_type>                                  const_iterator;
+            typedef ft::reverse_BST_iterator<value_type>                                reverse_iterator;
+            typedef ft::const_reverse_BST_iterator<value_type>                          const_reverse_iterator;
+            typedef ptrdiff_t                                                           difference_type;
+            typedef size_t                                                              size_type;
+            typedef typename allocator_type::template rebind< Node<value_type> >::other node_allocator;
 
         public:
         /* Containers: */
